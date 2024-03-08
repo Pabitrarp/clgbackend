@@ -4,7 +4,7 @@
   "description": "PRACTING TO DEVELOPE AN E-COMMERCE BACKEND PROJECT",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
