@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         default: "customer",
         enum:["customer","admin"]
     },
-})
+},{timestamps: true,versionKey: false})
 
 const Student = mongoose.model("User",userSchema);
 
