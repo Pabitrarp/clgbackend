@@ -1,0 +1,45 @@
+# Node.js dependencies
+node_modules/
+
+# Generated files
+build/
+dist/
+*.log
+
+# Environment variables
+.env
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# User-specific files
+*.DS_Store
+Thumbs.db
+
+# Backend logs
+logs/
+
+# Frontend build artifacts
+client/build/
+client/node_modules/
+
+# Backend build artifacts
+server/build/
+server/node_modules/
+
+# Environment-specific files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage/
+
+# Dependency directories
+.jest/
+
+# Docker
+Dockerfile
+docker-compose.yml
