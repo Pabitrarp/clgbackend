@@ -1,14 +1,15 @@
 const express = require('express');
-const mongoose = require('mongoose');
 
 // Server Start
 const app = express();
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const user_model = require('./models/user.models.js');
 const server_config = require('./configs/server.config.js');
-
-// CONNECTION WITH MONGOOSE
 const db_config = require('./configs/db.config.js');
-const user_model = require('./models/user.models.js')
-const bcCrypt = require('bcryptjs');
+
+app.use(express.json());
+// CONNECTION WITH MONGOOSE
 mongoose.connect(`${db_config.DB_URL}/${db_config.DB_NAME}`);
 
 const db = mongoose.connection;
@@ -19,32 +20,39 @@ db.on("error", (error) => {
 
 db.once("open", () => {
     console.log("Connection established successfully with DB");
-    //CREATE ADMIN
+    // CREATE ADMIN
     init();
 });
 
-async function init()
-{
-    let user = await user_model.findOne({userid:"admin"})
-    if(user)
-    {
-        console.log("Admin Already Present");
-        return;
-    }
+async function init() {
     try {
-        user= await user_model.create({
-            name:"Subhrajit",
-            userid:"admin",
-            password:bcCrypt.hashSync("likundash42@",8),
-            email:"likundash42@gmail.com",
-            userType:"admin"
-        })
-        console.log(`Admin Created Sucessfull`)
-        
+        let user = await user_model.findOne({ userid: "admin" });
+    
+        if (user) {
+            console.log("Admin already present");
+            return;
+        }
     } catch (error) {
         console.log(error)
     }
+
+    try {
+        user = await user_model.create({
+            name: "Subhrajit",
+            userid: "admin",
+            password: bcrypt.hashSync("likundash42@", 8),
+            email: "likundash42@gmail.com",
+            userType: "admin"
+        });
+
+        console.log("Admin created successfully");
+    } catch (error) {
+        console.log(error);
+    }
 }
+
+// Stitch the route to the server
+require("./router/auth.route.js")(app);
 
 app.listen(server_config.PORT, () => {
     console.log(`Server started at ${server_config.PORT}`);
