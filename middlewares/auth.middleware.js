@@ -59,7 +59,7 @@ const verify_Signin_Body = (req,res,next)=>{
 
 const verify_Token = (req,res,next)=>{
     //Read Header To Check Any Token Avilable Or Not
-    const token = req.headers['x-access-token']
+    const token = req.headers['authorization']
 
     if(!token)
     {
@@ -89,7 +89,7 @@ const verify_Token = (req,res,next)=>{
 
 const isAdmin = (req,res,next)=>{
     const user = req.user;
-    if(user && user.userType == "ADMIN")
+    if(user && user.userType == 'admin')
     {
         next()
     }
