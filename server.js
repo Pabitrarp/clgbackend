@@ -54,6 +54,7 @@ async function init() {
 // Stitch the route to the server
 require("./router/auth.routes.js")(app);//for authentication for user
 require("./router/category.routes.js")(app);//For Category Product
+require("./router/product.routes.js")(app);//For Product
 
 app.listen(server_config.PORT, () => {
     console.log(`Server started at ${server_config.PORT}`);
