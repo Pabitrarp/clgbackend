@@ -14,6 +14,7 @@ exports.signup = async (req, res) => {
         email: request_body.email,
         password: bcrypt.hashSync(`${request_body.password}`, 8),
     };
+    console.log(user_obj);
     try {
         const user_created = await user_model.create(user_obj);
         const res_obj={
