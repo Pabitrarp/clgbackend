@@ -58,7 +58,7 @@ exports.signin = async(req,res)=>{
     }
     else{
         const token = jwt.sign({id: get_User.userid},secret.secretKey,{
-            expiresIn: 120/* in sec */
+            expiresIn: 300/* in sec */
         })
 
         res.status(200).send({
