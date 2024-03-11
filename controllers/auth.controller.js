@@ -14,7 +14,6 @@ exports.signup = async (req, res) => {
         email: request_body.email,
         password: bcrypt.hashSync(`${request_body.password}`, 8),
     };
-    console.log(user_obj);
     try {
         const user_created = await user_model.create(user_obj);
         const res_obj={
@@ -40,7 +39,7 @@ exports.signin = async(req,res)=>{
     //FETCH ALL BODY DATA
     const signIn_body = req.body;
     //FIND USER EXIST OR NOT 
-    const get_User = await user_model.findOne({userid:req.body.userid})
+    const get_User = await user_model.findOne({email:req.body.email})
     if(get_User == null)
     {
         return res.status(400).send({
