@@ -42,10 +42,10 @@ const verify_Signup_Body = async (req, res, next) => {
 
 const verify_Signin_Body = (req,res,next)=>{
 
-    if(!req.body.userid)
+    if(!req.body.email)
     {
         return res.status(400).send({
-            message: "UserId is Not Present"
+            message: "Email is Not Present"
         })
     }
     if(!req.body.password)
