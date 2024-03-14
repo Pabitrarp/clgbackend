@@ -7,8 +7,10 @@ const bcrypt = require('bcryptjs');
 const user_model = require('./models/user.models.js');
 const server_config = require('./configs/server.config.js');
 const db_config = require('./configs/db.config.js');
+const cors = require('cors')
 
 app.use(express.json());
+app.use(cors())
 // CONNECTION WITH MONGOOSE
 mongoose.connect(`${db_config.DB_URL}/${db_config.DB_NAME}`);
 

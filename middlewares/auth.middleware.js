@@ -7,16 +7,19 @@ const verify_Signup_Body = async (req, res, next) => {
         // Check For Name, Email, UserId
         if (!req.body.name) {
             return res.status(400).send({
+                sucess: false,
                 message: "Name is not provided in the body"
             });
         }
         if (!req.body.email) {
             return res.status(400).send({
+                sucess: false,
                 message: "Email is not provided in the body"
             });
         }
         if (!req.body.userid) {
             return res.status(400).send({
+                sucess: false,
                 message: "UserID is not provided in the body"
             });
         }
@@ -26,6 +29,7 @@ const verify_Signup_Body = async (req, res, next) => {
 
         if (existingUser) {
             return res.status(400).send({
+                sucess: false,
                 message: "User with the same ID already registered"
             });
         }
@@ -35,6 +39,7 @@ const verify_Signup_Body = async (req, res, next) => {
     } catch (error) {
         console.log("Error in request body ", error);
         res.status(500).send({
+            sucess: false,
             message: "Error while fetching data from body"
         });
     }

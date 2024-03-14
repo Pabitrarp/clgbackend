@@ -24,11 +24,17 @@ exports.signup = async (req, res) => {
             createdAt:user_created.createdAt,
             updatedAt:user_created.updatedAt
         }
-        res.status(201).send(res_obj);
+        res.status(201).send(
+            {
+                sucess: true,
+                res_obj,
+                message:"User Register SucessFull"
+            });
     } catch (error) {
         console.error("Error Registering User", error);
             // Other types of errors
             res.status(500).send({
+                sucess: false,
                 message: "Some error occurred while registering the user.",
                 error: error.message,
             });
