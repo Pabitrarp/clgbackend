@@ -50,13 +50,15 @@ const verify_Signin_Body = (req,res,next)=>{
     if(!req.body.email)
     {
         return res.status(400).send({
-            message: "Email is Not Present"
+            sucess: false,
+            message: `Email is Not Present`
         })
     }
     if(!req.body.password)
     {
         return res.status(400).send({
-            message: "Password is Not Present"
+            sucess:false,
+            message: `Password is Not Present`
         })
     }
     next()
@@ -69,6 +71,7 @@ const verify_Token = (req,res,next)=>{
     if(!token)
     {
         return res.status(403).send({
+            sucess: false,
             message:"No Token Found: Unauthorized"
         })
     }
@@ -77,6 +80,7 @@ const verify_Token = (req,res,next)=>{
         if(err)
         {
             return res.status(500).send({
+                sucess:false,
                 message: "Unauthorized!"
             })
         }
@@ -84,6 +88,7 @@ const verify_Token = (req,res,next)=>{
         if(!user)
         {
             return res.status(400).send({
+                sucess: false,
                 message: "Unauthorized, this user for this token doesnot exist"
             })
         }
@@ -100,6 +105,7 @@ const isAdmin = (req,res,next)=>{
     }
     else{
         return res.status(403).send({
+            sucess: false,
             message: "Only ADMINS Are Allowed To Acess This End Point"
         })
     }
