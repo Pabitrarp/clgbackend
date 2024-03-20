@@ -71,12 +71,13 @@ exports.signin = async (req, res) => {
 
       res.status(200).send({
         sucess: true,
-        name: get_User.name,
-        userid: get_User.userid,
-        email: get_User.email,
-        userType: get_User.userType,
-        accessToken: token,
         message: `${signIn_body.userType} Login Sucessful`,
+        user:{
+          name:get_User.name,
+          email:get_User.email,
+          userType: get_User.userType
+        },
+        token
       });
     }
   }

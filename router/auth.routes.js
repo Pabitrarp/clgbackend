@@ -9,4 +9,8 @@ module.exports = (app) => {
     //POST CALL FOR SIGNIN USER
     app.post("/ecomm/api/v1/auth/signin",[authMiddleWare.verify_Signin_Body],authController.signin);
     
+    //protected Router
+    app.get("/ecomm/api/v1/auth/user-auth",[authMiddleWare.verify_Token],(req,res)=>{
+        res.status(200).send({ ok: true});
+    })
 };
