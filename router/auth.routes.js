@@ -10,7 +10,13 @@ module.exports = (app) => {
     app.post("/ecomm/api/v1/auth/signin",[authMiddleWare.verify_Signin_Body],authController.signin);
     
     //protected Router
+
+    //User Route
     app.get("/ecomm/api/v1/auth/user-auth",[authMiddleWare.verify_Token],(req,res)=>{
+        res.status(200).send({ ok: true});
+    })
+    //Admin Route
+    app.get("/ecomm/api/v1/auth/admin-auth",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],(req,res)=>{
         res.status(200).send({ ok: true});
     })
 };
