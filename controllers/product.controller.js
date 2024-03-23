@@ -57,7 +57,7 @@ exports.createProduct = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
   try {
     const Products = await product_model
-      .findById(productId)
+      .find({})
       .select("-photo");
 
     if (!Products) {
