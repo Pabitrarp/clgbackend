@@ -56,7 +56,6 @@ exports.createProduct = async (req, res) => {
 //Get all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const productId = req.params.id;
     const Products = await product_model
       .findById(productId)
       .select("-photo");
