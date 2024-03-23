@@ -21,7 +21,7 @@ exports.createProduct = async (req, res) => {
     case photo && photo.size > 1000000:
       return res
         .status(500)
-        .send({ error: "Photo is Required and Photo Should be less than 1mb" });
+        .send({ success:false,error: "Photo is Required and Photo Should be less than 1mb" });
   }
   try {
     const product = new product_model({
@@ -46,7 +46,7 @@ exports.createProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      sucess: false,
+      success: false,
       error,
       message: "Cannot Create Product Problem In Server",
     });
@@ -57,11 +57,11 @@ exports.createProduct = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
   try {
     const productId = req.params.id;
-    const singleProduct = await product_model
+    const Products = await product_model
       .findById(productId)
       .select("-photo");
 
-    if (!singleProduct) {
+    if (!Products) {
       return res.status(404).send({
         success: false,
         message: "Product not found",
@@ -71,12 +71,12 @@ exports.getAllProducts = async (req, res) => {
     return res.status(200).send({
       success: true,
       message: "Product fetched successfully",
-      product: singleProduct,
+      Products,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      sucess: false,
+      success: false,
       error,
       message: "Failed to Fetch Product Problem In Server",
     });
@@ -86,11 +86,23 @@ exports.getAllProducts = async (req, res) => {
 //get Single Product
 exports.getSingleProducts = async (req, res) => {
   try {
-    await product_model.findOne(req.params.id).select("-photo");
+    const Product = await product_model.findOne(req.params.id).select("-photo");
+    if(!Product)
+    {
+      return res.status(400).send({
+        success:false,
+        message:"No Product Avilable"
+      })
+    }
+    return res.status(200).send({
+      success:true,
+      message:"Product Retrive Sucessful",
+      Product
+    })
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      sucess: false,
+      success: false,
       error,
       message: "Failed to Fetch Product Problem In Server",
     });
@@ -110,7 +122,7 @@ exports.productPhotoController = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      sucess: false,
+      success: false,
       error,
       message: "Error while getting product photo",
     });
@@ -189,12 +201,13 @@ exports.deleteProduct = async (req, res) => {
   try {
     await product_model.findByIdAndDelete(req.params.pid);
     res.status(200).send({
+      success:true,
       message: "Product Deleted SucessFul",
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      sucess: false,
+      success: false,
       error,
       message: "Error While Deleting Product",
     });

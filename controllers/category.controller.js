@@ -14,17 +14,23 @@ exports.createCategory = async (req,res)=>{
         //Backend Validation
         if(category)
         {
-            return res.status(201).send(category)
+            return res.status(201).send({
+                sucess:true,
+                category,
+                message:"Category Created Sucessfull"
+            })
         }
         else{
 
             return res.status(500).send({
+                sucess:false,
                 message : "Category Not Created"
             })
         }
     } catch (error) {
         console.log("Failed To Create Category",error)
         return res.status(500).send({
+            sucess:false,
             message : "Category Not Created Internal Server Error"
         })
     }
@@ -35,12 +41,14 @@ exports.getCategory = async(req,res)=>{
     if(categories == null)
     {
         return res.status(401).send({
+            sucess:false,
             message:"No Product is Retrived From Database"
         })
     }
     else{
         res.status(200).send({
-            message:"Product Categories Are:",
+            sucess:true,
+            message:"Product Retrive Sucessfull:",
             categories
         })
     }
@@ -53,6 +61,7 @@ exports.getSingleCategory = async(req,res)=>{
         if(singleCategory)
         {
             return res.status(201).send({
+                sucess:false,
                 message: "Fetching Single Category Sucessfull",
                 category: singleCategory
             })
@@ -84,10 +93,10 @@ exports.updateCategory = async (req,res)=>{
             { new: true}
           ); 
           if (!updatedCategory) {
-            return res.status(404).json({ message: 'Category not found' });
+            return res.status(404).json({ success:false,message: 'Category not found' });
           }
       
-          res.status(200).send({ message: 'Category updated successfully', category: updatedCategory });
+          res.status(200).send({ sucess:true,message: 'Category updated successfully', category: updatedCategory });
     } catch (error) {
         console.log(error);
         res.status(500).send({
