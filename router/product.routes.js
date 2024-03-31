@@ -12,7 +12,7 @@ module.exports = (app)=>{
     app.get("/ecomm/api/v1/auth/getProduct",productController.getAllProducts)
 
     //Get Single Product
-    app.get("/ecomm/api/v1/auth/singleProduct/:id",productController.getSingleProducts)
+    app.get("/ecomm/api/v1/auth/singleProduct/:name",productController.getSingleProducts)
 
     //update products
     app.put("/ecomm/api/v1/auth/updateProduct/:productId",[authMiddleware.verify_Token,authMiddleware.isAdmin,formidable()],productController.updateProduct)
@@ -21,5 +21,9 @@ module.exports = (app)=>{
     app.get("/ecomm/api/v1/auth/productPhoto/:pid",productController.productPhotoController)
 
     //delete product
-    app.put("/ecomm/api/v1/auth/deleteProduct/:id",[authMiddleware.verify_Token,authMiddleware.isAdmin],productController.deleteProduct)
+    app.delete(
+        "/ecomm/api/v1/auth/deleteProduct/:id",
+        [authMiddleware.verify_Token, authMiddleware.isAdmin],
+        productController.deleteProduct
+      );
 }

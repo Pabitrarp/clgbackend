@@ -58,7 +58,9 @@ exports.getAllProducts = async (req, res) => {
   try {
     const Products = await product_model
       .find({})
-      .select("-photo");
+      .populate('category')
+      .select("-photo")
+      .sort({createdAt:-1});
 
     if (!Products) {
       return res.status(404).send({
@@ -85,7 +87,7 @@ exports.getAllProducts = async (req, res) => {
 //get Single Product
 exports.getSingleProducts = async (req, res) => {
   try {
-    const Product = await product_model.findOne(req.params.id).select("-photo");
+    const Product = await product_model.findOne({name:req.params.name}).select("-photo").populate('category');
     if(!Product)
     {
       return res.status(400).send({
@@ -95,7 +97,7 @@ exports.getSingleProducts = async (req, res) => {
     }
     return res.status(200).send({
       success:true,
-      message:"Product Retrive Sucessful",
+      message:"Single Product Retrive Sucessful",
       Product
     })
   } catch (error) {
@@ -128,39 +130,23 @@ exports.productPhotoController = async (req, res) => {
   }
 };
 
-//update Product
 exports.updateProduct = async (req, res) => {
-  // Fetch Data From Fields
-  const { name, description, price, category, quantity, shipping } = req.fields;
-  const { photo } = req.files;
-
-  // Validation
-  switch (true) {
-    case !name:
-      return res.status(500).send({ error: "Name is Required" });
-    case !description:
-      return res.status(500).send({ error: "Description is Required" });
-    case !price:
-      return res.status(500).send({ error: "Price is Required" });
-    case !category:
-      return res.status(500).send({ error: "Category is Required" });
-    case !quantity:
-      return res.status(500).send({ error: "Quantity is Required" });
-    case photo && photo.size > 1000000:
-      return res
-        .status(500)
-        .send({ error: "Photo is Required and Photo Should be less than 1mb" });
-  }
-
   try {
+    // Fetch Data From Fields
+    const { name, description, price, category, quantity, shipping } = req.fields;
+    const { photo } = req.files;
+
+    // Validation
+    if (!name || !description || !price || !category || !quantity) {
+      return res.status(400).send({ error: "All fields are required" });
+    }
+
     // Find the existing product
     const productId = req.params.productId; //product ID is part of the URL
     const existingProduct = await product_model.findById(productId);
 
     if (!existingProduct) {
-      return res
-        .status(404)
-        .send({ success: false, message: "Product not found" });
+      return res.status(404).send({ success: false, message: "Product not found" });
     }
 
     // Update the fields you want to change
@@ -186,19 +172,15 @@ exports.updateProduct = async (req, res) => {
       product: existingProduct,
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      error,
-      message: "Error in Update Product",
-    });
+    console.log("Error:", error); // Log the error for debugging
+    return res.status(500).send({ success: false, error, message: "Error in Update Product" });
   }
 };
 
 //delete Product
 exports.deleteProduct = async (req, res) => {
   try {
-    await product_model.findByIdAndDelete(req.params.pid);
+    await product_model.findByIdAndDelete(req.params.id);
     res.status(200).send({
       success:true,
       message: "Product Deleted SucessFul",
