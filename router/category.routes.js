@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.post("/ecomm/api/v1/auth/categories", [authMiddleWare.verify_Token, authMiddleWare.isAdmin], category_Controller.createCategory);
     
     //Get All Category
-    app.get("/ecomm/api/v1/auth/allCategories", [authMiddleWare.verify_Token, authMiddleWare.isAdmin], category_Controller.getCategory);
+    app.get("/ecomm/api/v1/auth/allCategories", [authMiddleWare.verify_Token], category_Controller.getCategory);
     
     //Get Single Category
     app.get("/ecomm/api/v1/auth/singleCategories/:id", [authMiddleWare.verify_Token, authMiddleWare.isAdmin], category_Controller.getSingleCategory);
