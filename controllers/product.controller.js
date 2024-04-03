@@ -1,5 +1,6 @@
 const product_model = require("../models/product.models.js");
 const fs = require("fs");
+const mongoose = require("mongoose")
 
 //Product Create
 exports.createProduct = async (req, res) => {
@@ -113,12 +114,24 @@ exports.getSingleProducts = async (req, res) => {
 //get photo
 exports.productPhotoController = async (req, res) => {
   try {
-    const product = await product_model
-      .findById(req.params.pid)
-      .select("photo");
-    if (product.photo.data) {
+    const { pid } = req.params;
+    // Check if pid is defined and is a valid ObjectId
+    if (!pid || !mongoose.Types.ObjectId.isValid(pid)) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid product ID",
+      });
+    }
+
+    const product = await product_model.findById(pid).select("photo");
+    if (product && product.photo && product.photo.data) {
       res.set("Content-type", product.photo.contentType);
       return res.status(200).send(product.photo.data);
+    } else {
+      return res.status(404).send({
+        success: false,
+        message: "Product photo not found",
+      });
     }
   } catch (error) {
     console.log(error);
@@ -194,3 +207,135 @@ exports.deleteProduct = async (req, res) => {
     });
   }
 };
+
+//filter Product
+exports.productFilterController = async (req, res) => {
+  try {
+    const {checked,radio} = req.body;
+    let args = {}
+    if(checked.length > 0)
+    {
+      args.category = checked;
+    }
+    if(radio.length)
+    {
+      args.price = {$gte: radio[0],$lte:radio[1]}
+    }
+    const products = await product_model.find(args)
+    res.status(200).send({
+      success: true,
+      products
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+      success:false,
+      message:"Server issue while Filtering Products",
+      error
+    })
+  }
+}
+
+//product count
+// exports.productCountController = async (req,res) => {
+//   try {
+//     const total = await product_model.find({}).estimatedDocumentCount();
+//     res.status(200).send({
+//       success:true,
+//       total
+//     })
+//   } catch (error) {
+//     console.log(error)
+//     res.status(400).send({
+//       message:"Error in Product Count",
+//       error,
+//       success: false
+//     })
+//   }
+// }
+
+//product list based on page
+// exports.productListController = async (req,res) => {
+//   try {
+//     const perPage = 6;
+//     const page = req.params.page ? req.params.page : 1
+//     const products = await product_model.find({}).select("-photo").skip((page-1)*perPage).limit(perPage).sort({createdAt:-1});
+//     res.status(200).send({
+//       success: true,
+//       products,
+//     })
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).send({
+//       success: false,
+//       message:"Error in Per Page",
+//       error
+//     })
+//   }
+// }
+
+//Search Product
+
+exports.searchProduct = async (req,res) => {
+  try {
+    const keyword = req.params.keyword;
+    const result = await product_model.find({
+      $or:[
+        {name:{$regex : keyword, $options:"i"}},
+        {description:{$regex : keyword, $options:"i"}}
+      ]
+    }).select("-photo");
+    if (result.length > 0) {
+      res.status(200).send({
+        success: true,
+        result,
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "No products found matching the search criteria.",
+      });
+    }    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message:"Error in Search Api",
+      error
+    })
+  }
+}
+
+//Similar Product
+
+exports.similarProduct = async (req,res) => {
+  try {
+    const pid = req.params.pid;
+    const cid = req.params.cid;
+
+    const result = await product_model.find({
+      category:cid,
+      _id:{$ne:pid}
+    }).select("-photo").limit(5).populate("category")
+    if(result)
+    {
+      res.status(200).send({
+        success: true,
+        result
+      })
+    }
+    else{
+      res.status(400).send({
+        success: false,
+        message:"No Simlar Product Found"
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message:"Error in Finding Simlar Product",
+      error
+    })
+  }
+}

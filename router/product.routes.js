@@ -26,4 +26,19 @@ module.exports = (app)=>{
         [authMiddleware.verify_Token, authMiddleware.isAdmin],
         productController.deleteProduct
       );
+
+    //Filter Product
+    app.post("/ecomm/api/v1/auth/product-filter",productController.productFilterController)
+
+    //product Count
+    // app.get("/ecomm/api/v1/auth/product-count",productController.productCountController)
+
+    //product per page
+    // app.get("/ecomm/api/v1/auth/product-list/:page",productController.productListController)
+    
+    //Search Product
+    app.get("/ecomm/api/v1/auth/search/:keyword",productController.searchProduct)
+
+    //similar Product
+    app.get("/ecomm/api/v1/auth/similar-product/:pid/:cid",productController.similarProduct)
 }
