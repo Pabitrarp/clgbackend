@@ -16,6 +16,8 @@ const CreateCategory = () => {
   const [selected, setSelected] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [categoryModal, setCategoryModal] = useState(false);
 
   // handle Form
   const handleSubmit = async (e) => {
@@ -113,24 +115,44 @@ const CreateCategory = () => {
           <div className="w-1/4 mr-4">
             <AdminMenu />
           </div>
-          <div className="flex w-full">
-            <div className="flex-1">
-              <h1 className="text-center">Manage Category</h1>
-              <div className="p-3 ">
-                <CategoryForm
-                  handleSubmit={handleSubmit}
-                  name={name}
-                  setName={setName}
-                  description={description}
-                  setDescription={setDescription}
-                />
+          <div className="w-full">
+          <div className=" flex bg-green-200 h-16 justify-center items-center">
+              <h1 className="text-center text-3xl font-extrabold">Manage Category</h1>
               </div>
-              <div className="categoryTable mt-12 max-h-fit">
-                <div className="sm:rounded-lg relative overflow-x-auto bg-white"
-                style={{ maxHeight: "500px", overflowY: "auto" }}>
+            <div className="flex-1">
+              <div className=" p-3 flex justify-end mt-4">
+                <button
+                  type="button"
+                  className="focus:outline-none text-2xl text-white bg-green-400
+                  hover:bg-green-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  onClick={() => setCategoryModal(true)}
+                >
+                  Add Category
+                </button>
+                <Modal
+                  onCancel={() => setCategoryModal(false)}
+                  footer={null}
+                  visible={categoryModal}
+                >
+                  <div className=" p-3">
+                    <CategoryForm
+                      handleSubmit={handleSubmit}
+                      name={name}
+                      setName={setName}
+                      description={description}
+                      setDescription={setDescription}
+                    />
+                  </div>
+                </Modal>
+              </div>
+              <div className="categoryTable max-h-fit">
+                <div
+                  className="sm:rounded-lg relative overflow-x-auto bg-white"
+                  style={{ maxHeight: "500px", overflowY: "auto" }}
+                >
                   <table className="rtl:text-right w-full text-sm text-left text-gray-500">
-                    <thead className="text-xl text-gray-700 uppercase text-center bg-green-200 sticky top-0">
-                      <tr >
+                    <thead className="sticky top-0 text-xl text-center text-gray-700 uppercase bg-green-200">
+                      <tr>
                         <th scope="col" className="px-6 py-3">
                           Category Name
                         </th>
@@ -144,10 +166,17 @@ const CreateCategory = () => {
                     </thead>
                     <tbody>
                       {categories.map((c) => (
-                        <tr className="bg-white border-green-300 border-y-2" key={c._id}>
-                          <td className="text-center text-xl text-black">{c.name}</td>
-                          <td className="text-center text-xl text-black">{c.description}</td>
-                          <td className="text-center text-xl text-black">
+                        <tr
+                          className="border-y-2 bg-white border-green-300"
+                          key={c._id}
+                        >
+                          <td className="text-xl text-center text-black">
+                            {c.name}
+                          </td>
+                          <td className="text-xl text-center text-black">
+                            {c.description}
+                          </td>
+                          <td className="text-xl text-center text-black">
                             <button
                               type="button"
                               className="border-2 hover:border-blue-600 text-blue-600
@@ -161,7 +190,7 @@ const CreateCategory = () => {
                                 setSelected(c);
                               }}
                             >
-                             <FaEdit />
+                              <FaEdit />
                             </button>
                             <button
                               type="button"
@@ -170,7 +199,8 @@ const CreateCategory = () => {
                               hover:bg-red-500
                               focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center me-2 mt-4 mb-4 "
                               onClick={() => {
-                                prompt(`Are you Sure You Want To Delete This Category ${c.name}`,c.name) ? handleDelete(c._id) : toast.error("Category Deletion Cancled")
+                                setShowDeleteModal(!showDeleteModal);
+                                setSelected(c);
                               }}
                             >
                               <MdDelete />
@@ -194,6 +224,36 @@ const CreateCategory = () => {
                     handleSubmit={handleUpdate}
                   />
                 </Modal>
+                {showDeleteModal && (
+                  <div
+                    id="popup-modal"
+                    tabIndex={-1}
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75"
+                  >
+                    <div className="w-full max-w-sm p-8 bg-white rounded-lg">
+                      <h3 className="mb-4 text-lg font-semibold">
+                        {`Are you sure you want to delete this category ${selected.name}?`}
+                      </h3>
+                      <div className="flex justify-end space-x-4">
+                        <button
+                          className="hover:bg-red-600 px-4 py-2 text-white bg-red-500 rounded-lg"
+                          onClick={() => {
+                            handleDelete(selected._id);
+                            setShowDeleteModal(false);
+                          }}
+                        >
+                          Yes, delete
+                        </button>
+                        <button
+                          className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg"
+                          onClick={() => setShowDeleteModal(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
