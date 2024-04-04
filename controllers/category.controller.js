@@ -42,13 +42,13 @@ exports.getCategory = async(req,res)=>{
     {
         return res.status(401).send({
             sucess:false,
-            message:"No Product is Retrived From Database"
+            message:"No Category is Retrived From Database"
         })
     }
     else{
         res.status(200).send({
             sucess:true,
-            message:"Product Retrive Sucessfull:",
+            message:"Category Retrive Sucessfull:",
             categories
         })
     }

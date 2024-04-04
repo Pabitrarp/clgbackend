@@ -11,7 +11,7 @@ const AdminMenu = () => {
   return (
     <>
    {/* <h4 className="text-black-100">Admin Panel</h4> */}
-      <div className="dark:bg-gray-800 dark:border-gray-600 dark:text-white w-49 text-sm font-medium text-gray-900 bg-white border border-gray-200  h-screen">
+      <div className="dark:bg-gray-800 dark:border-gray-600 dark:text-white w-49 text-sm font-medium text-gray-900 bg-white border border-gray-200 h-screen">
         <NavLink
           to="/dashboard/admin"
           aria-current="true"

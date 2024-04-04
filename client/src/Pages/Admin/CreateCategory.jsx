@@ -5,6 +5,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import CategoryForm from "../../Components/Form/CategoryForm";
 import { Modal } from "antd";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -114,7 +116,7 @@ const CreateCategory = () => {
           <div className="flex w-full">
             <div className="flex-1">
               <h1 className="text-center">Manage Category</h1>
-              <div className="p-3">
+              <div className="p-3 ">
                 <CategoryForm
                   handleSubmit={handleSubmit}
                   name={name}
@@ -123,11 +125,12 @@ const CreateCategory = () => {
                   setDescription={setDescription}
                 />
               </div>
-              <div className="categoryTable ">
-                <div className="sm:rounded-lg relative overflow-x-auto bg-white">
+              <div className="categoryTable mt-12 max-h-fit">
+                <div className="sm:rounded-lg relative overflow-x-auto bg-white"
+                style={{ maxHeight: "500px", overflowY: "auto" }}>
                   <table className="rtl:text-right w-full text-sm text-left text-gray-500">
-                    <thead className="bg-gray-50 text-xs text-gray-700 uppercase">
-                      <tr>
+                    <thead className="text-xl text-gray-700 uppercase text-center bg-green-200 sticky top-0">
+                      <tr >
                         <th scope="col" className="px-6 py-3">
                           Category Name
                         </th>
@@ -141,13 +144,16 @@ const CreateCategory = () => {
                     </thead>
                     <tbody>
                       {categories.map((c) => (
-                        <tr className="bg-white border-black border-y-2" key={c._id}>
-                          <td className="text-center">{c.name}</td>
-                          <td className="text-center">{c.description}</td>
-                          <td className="text-center">
+                        <tr className="bg-white border-green-300 border-y-2" key={c._id}>
+                          <td className="text-center text-xl text-black">{c.name}</td>
+                          <td className="text-center text-xl text-black">{c.description}</td>
+                          <td className="text-center text-xl text-black">
                             <button
                               type="button"
-                              className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              className="border-2 hover:border-blue-600 text-blue-600
+                              hover:text-white
+                              hover:bg-blue-500
+                              focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center me-2 mt-4 mb-4 "
                               onClick={() => {
                                 setVisible(true);
                                 setUpdatedName(c.name);
@@ -155,16 +161,19 @@ const CreateCategory = () => {
                                 setSelected(c);
                               }}
                             >
-                              Edit
+                             <FaEdit />
                             </button>
                             <button
                               type="button"
-                              className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              className="border-2 hover:border-rose-600 text-red-600
+                              hover:text-white
+                              hover:bg-red-500
+                              focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center me-2 mt-4 mb-4 "
                               onClick={() => {
-                                handleDelete(c._id);
+                                prompt(`Are you Sure You Want To Delete This Category ${c.name}`,c.name) ? handleDelete(c._id) : toast.error("Category Deletion Cancled")
                               }}
                             >
-                              Delete
+                              <MdDelete />
                             </button>
                           </td>
                         </tr>

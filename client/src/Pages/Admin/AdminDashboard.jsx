@@ -9,8 +9,8 @@ const AdminDashboard = () => {
   return (
     <>
       <Layout>
-      <div className="w-1/4 mr-4">
-            <AdminMenu />
+      <div className="w-1/4 mr-4 ">
+            <AdminMenu className="h-full" />
             {/* Add your group list component here */}
           </div>
         <div className="max-w-full px-4 mx-auto my-12 flex">
