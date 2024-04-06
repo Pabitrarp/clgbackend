@@ -32,15 +32,15 @@ const Products = () => {
   }, []);
   return (
     <Layout>
-      <div className="md:grid-cols-3 grid grid-cols-1">
-        <div className="md:col-span-3 col-span-1">
+      <div className="flex w-full">
+        <div className="w-1/4 mr-4">
           <AdminMenu />
         </div>
-        <div className="md:col-span-2 col-span-1">
-          <h1 className="text-center">All Products List</h1>
+          {/* <h1 className="text-center">All Products List</h1> */}
+        <div className="flex flex-wrap justify-center items-center w-screen">
           {products.map((product) => (
             <Link to={`/dashboard/admin/product/${product.name}`} key={product._id}>
-            <div className="dark:bg-gray-800 dark:border-gray-700 max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+            <div className="dark:bg-gray-800 dark:border-gray-700 max-w-sm bg-white border border-gray-200 rounded-lg shadow ml-8">
               <a href="#">
                 <img
                   className="rounded-t-lg"

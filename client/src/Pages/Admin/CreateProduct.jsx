@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import createproduct from "../../assets/createproduct.png";
 
 const { Option } = Select;
 
@@ -43,14 +44,6 @@ const CreateProduct = () => {
     getAllCategory();
   }, []);
 
-  const handleFileChange = (e) => {
-    setPhoto(e.target.files[0]);
-  };
-
-  const handleButtonClick = () => {
-    document.getElementById("p_photo").click();
-  };
-
   //Create Product Function
   const handleCreate = async (e) =>{
     e.preventDefault();
@@ -79,7 +72,7 @@ const CreateProduct = () => {
   return (
     <>
       <Layout>
-        <div className="flex max-w-full px-4 mx-auto my-12">
+        <div className="flex max-w-full">
           {/* Left side for list of groups */}
           <div className="w-1/4 mr-4">
             <AdminMenu />
@@ -87,14 +80,19 @@ const CreateProduct = () => {
           </div>
 
           {/* Right side for content */}
-          <div className="flex-1">
-            <h1>Create Products</h1>
-            <div className="w-7 categorydropDown m-2">
+        
+        <div className="w-screen lg:w-3/4 xl:w-3/4  bg-white rounded-lg shadow-lg">
+          <h1 className="text-3xl font-semibold text-center bg-green-200 h-16 flex justify-center items-center ">Create Product</h1>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 xl:mt-16">
+            <div className="flex justify-center items-center">
+              <img src={createproduct} alt="Create Product" className="w-full" />
+            </div>
+            <div className="flex flex-col justify-center  items-center xl:w-3/4 ">
               <Select
                 placeholder="Select Categories"
                 size="large"
                 showSearch
-                className="form-select mb-3"
+                className="w-full mb-4 "
                 onChange={(value) => {
                   setCategory(value);
                 }}
@@ -105,49 +103,28 @@ const CreateProduct = () => {
                   </Option>
                 ))}
               </Select>
-              <div className="mb-3">
-                <button type="button"className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  onClick={handleButtonClick} style={{ cursor: "pointer" }}>
-                  {photo ? photo.name : "Upload Photo"}
-                  <input
-                    type="file"
-                    name="photo"
-                    id="p_photo"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    style={{ display: "none" }}
-                  />
-                </button>
-              </div>
-              <div className="mb-3 width: max-content">
-                {photo && (<div className="text-centre">
-                  <img src={URL.createObjectURL(photo)} alt="product-photo" className="max-w-full h-auto" />
-                </div>)}
-              </div>
-              <div className="mb-3">
-                <input type="text" name="" id="" value={name} placeholder="Write a Name" className="" onChange={(e)=> setName(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <input type="text" name="" id="" value={description} placeholder="Write a description" onChange={(e) => setDescription(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <input type="number" name="" id="" value={price} placeholder="Product Price" onChange={(e) => setPrice(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <input type="number" name="" id="" value={quantity} placeholder="Write Quantity" onChange={(e) => setQuantity(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <Select placeholder="Select Shipping" size="large" showSearch className="" onChange={(value)=>setShipping(value)}>
-                  <Option value="0">No</Option>
-                  <Option value="1">Yes</Option>
-                </Select>
-              </div>
-              <div className="mb-3">
-              <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={handleCreate}>Create Product</button>
-              </div>
+              <input type="text" value={name} placeholder="Product Name" className="w-full mb-4 px-4 py-2 border rounded-lg" onChange={(e)=> setName(e.target.value)}/>
+              <input type="text" value={description} placeholder="Description" className="w-full mb-4 px-4 py-2 border rounded-lg" onChange={(e) => setDescription(e.target.value)}/>
+              <input
+                      type="file"
+                      name="photo"
+                      className="w-full mb-4 px-4 py-2 border rounded-lg"
+                      accept="image/*"
+                      required
+                      onChange={(e) => setPhoto(e.target.files[0])}
+                    />
+              <input type="number" value={price} placeholder="Price" className="w-full mb-4 px-4 py-2 border rounded-lg" onChange={(e) => setPrice(e.target.value)}/>
+              <input type="number" value={quantity} placeholder="Quantity" className="w-full mb-4 px-4 py-2 border rounded-lg" onChange={(e) => setQuantity(e.target.value)}/>
+              <Select placeholder="Select Shipping" size="large" showSearch className="w-full mb-4" onChange={(value)=>setShipping(value)}>
+                <Option value="0">No</Option>
+                <Option value="1">Yes</Option>
+              </Select>
+              <button type="button" className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 text-white font-medium rounded-lg py-2" onClick={handleCreate}>Create Product</button>
             </div>
           </div>
         </div>
+      </div>
+    
       </Layout>
     </>
   );

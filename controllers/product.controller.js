@@ -151,7 +151,7 @@ exports.updateProduct = async (req, res) => {
 
     // Validation
     if (!name || !description || !price || !category || !quantity) {
-      return res.status(400).send({ error: "All fields are required" });
+      return res.status(400).send({ success:false,error: "All fields are required" });
     }
 
     // Find the existing product
