@@ -236,24 +236,6 @@ exports.productFilterController = async (req, res) => {
   }
 }
 
-//product count
-// exports.productCountController = async (req,res) => {
-//   try {
-//     const total = await product_model.find({}).estimatedDocumentCount();
-//     res.status(200).send({
-//       success:true,
-//       total
-//     })
-//   } catch (error) {
-//     console.log(error)
-//     res.status(400).send({
-//       message:"Error in Product Count",
-//       error,
-//       success: false
-//     })
-//   }
-// }
-
 //product list based on page
 // exports.productListController = async (req,res) => {
 //   try {
@@ -337,5 +319,32 @@ exports.similarProduct = async (req,res) => {
       message:"Error in Finding Simlar Product",
       error
     })
+  }
+}
+
+//Count Product
+exports.countProduct = async (req,res) => {
+  try {
+    const result = await product_model.countDocuments();
+    if(result > 0)
+    {
+      res.status(200).send({
+        success: true,
+        message:"Products Count Retrived",
+        result
+      })
+    }
+    else{
+      res.status(400).send({
+        success: false,
+        message:"Products Count Retrived Failed"
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error,
+      message: 'Error while fetching Products from DB',
+  });
   }
 }

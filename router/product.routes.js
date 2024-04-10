@@ -30,9 +30,6 @@ module.exports = (app)=>{
     //Filter Product
     app.post("/ecomm/api/v1/auth/product-filter",productController.productFilterController)
 
-    //product Count
-    // app.get("/ecomm/api/v1/auth/product-count",productController.productCountController)
-
     //product per page
     // app.get("/ecomm/api/v1/auth/product-list/:page",productController.productListController)
     
@@ -41,4 +38,7 @@ module.exports = (app)=>{
 
     //similar Product
     app.get("/ecomm/api/v1/auth/similar-product/:pid/:cid",productController.similarProduct)
+
+    //count Product
+    app.get("/ecomm/api/v1/auth/countProduct",[authMiddleware.verify_Token,authMiddleware.isAdmin],productController.countProduct)
 }

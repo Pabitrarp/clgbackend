@@ -27,4 +27,7 @@ module.exports = (app) => {
 
     //delete User
     app.delete("/ecomm/api/v1/auth/delete-user/:uid",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],authController.deleteUser)
+
+    //count User
+    app.get("/ecomm/api/v1/auth/countUsers",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],authController.countUsers)
 };

@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminMenu from "../../Components/Layouts/AdminMenu";
 import Layout from "../../Components/Layouts/Layout";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "antd";
+import  axios  from "axios"
 
 const AdminDashboard = () => {
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const [users_count,setUsers_count] = useState(0);
+  const [products_count,setProduts_count] = useState(0);
+  const [category_count,setCategory_count] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [products, setProducts] = useState([
@@ -142,7 +146,60 @@ const AdminDashboard = () => {
   const endIndex = startIndex + pageSize;
   const displayedProducts = products.slice(startIndex, endIndex);
 
+//Count Users
+const countUser = async () => {
+  try {
+    const res = await axios.get("http://localhost:8000/ecomm/api/v1/auth/countUsers");
 
+    if(res.data.success)
+    {
+      setUsers_count(res.data.result)
+    }
+    else{
+      setUsers(0);
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+//Count Product
+const countProduct = async () => {
+  try {
+    const res = await axios.get("http://localhost:8000/ecomm/api/v1/auth/countProduct");
+
+    if(res.data.success)
+    {
+     setProduts_count(res.data.result)
+    }
+    else{
+      setProduts_count(0);
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//Count Category
+const countCategory = async () => {
+  try {
+    const res = await axios.get("http://localhost:8000/ecomm/api/v1/auth/countCategory");
+
+    if(res.data.success)
+    {
+     setCategory_count(res.data.result)
+    }
+    else{
+      setCategory_count(0);
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+useEffect(() => {
+countUser();
+countProduct();
+countCategory();
+},[])
   return (
     <>
       <Layout>
@@ -183,7 +240,7 @@ const AdminDashboard = () => {
                             All Users
                           </p>
                           <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
-                            0
+                            {users_count}
                           </p>
                         </div>
                       </div>
@@ -210,13 +267,13 @@ const AdminDashboard = () => {
                             Products
                           </p>
                           <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
-                            0
+                            {products_count}
                           </p>
                         </div>
                       </div>
                       {/* Card */}
                       <div
-                        className="dark:bg-gray-800 h-30 flex items-center w-48 p-4 p-6 bg-white rounded-full shadow-xs"
+                        className="dark:bg-gray-800 h-30 flex items-center w-48 p-6 bg-white rounded-full shadow-xs"
                         onClick={() =>
                           navigate("/dashboard/admin/create-category")
                         }
@@ -239,13 +296,13 @@ const AdminDashboard = () => {
                             Catagory
                           </p>
                           <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
-                            0
+                            {category_count}
                           </p>
                         </div>
                       </div>
                       {/* Card */}
                       <div
-                        className="dark:bg-gray-800 h-30 flex items-center w-48 p-4 p-6 bg-white rounded-full shadow-xs"
+                        className="dark:bg-gray-800 h-30 flex items-center w-48  p-6 bg-white rounded-full shadow-xs"
                         onClick={() => navigate("/dashboard/admin")}
                       >
                         <div className="dark:text-blue-100 dark:bg-blue-500 right-4 relative p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">

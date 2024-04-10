@@ -18,4 +18,7 @@ module.exports = (app) => {
     
     //Delete Category
     app.delete("/ecomm/api/v1/auth/deleteCategories/:id", [authMiddleWare.verify_Token, authMiddleWare.isAdmin], category_Controller.deleteCategory);
+
+    //count category
+    app.get("/ecomm/api/v1/auth/countCategory",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],category_Controller.countCategory)
 };

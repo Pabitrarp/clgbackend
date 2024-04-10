@@ -136,3 +136,30 @@ exports.deleteUser = async (req,res) => {
   });
   }
 }
+
+//Count User
+exports.countUsers = async (req,res) => {
+  try {
+    const result = await user_model.countDocuments();
+    if(result > 0)
+    {
+      res.status(200).send({
+        success: true,
+        message:"Users Count Retrived",
+        result
+      })
+    }
+    else{
+      res.status(400).send({
+        success: false,
+        message:"Users Count Retrived Failed"
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error,
+      message: 'Error while fetching user from DB',
+  });
+  }
+}

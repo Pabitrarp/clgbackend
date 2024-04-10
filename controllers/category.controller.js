@@ -153,3 +153,30 @@ exports.deleteCategory = async (req, res) => {
         });
     }
 };
+
+//Count Category
+exports.countCategory = async (req,res) => {
+    try {
+      const result = await category_model.countDocuments();
+      if(result > 0)
+      {
+        res.status(200).send({
+          success: true,
+          message:"Category Count Retrived",
+          result
+        })
+      }
+      else{
+        res.status(400).send({
+          success: false,
+          message:"Category Count Retrived Failed"
+        })
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error,
+        message: 'Error while fetching Category from DB',
+    });
+    }
+  }

@@ -15,11 +15,8 @@ const Dashboard = () => {
           </div>
 
           {/* Right side for content */}
-          <div className="flex-1">
-            <div className="card w-full border-4 border-style:solid p-3">
-              <h3>User Name:{auth?.user?.name}</h3>
-              <h3>User Email:{auth?.user?.email}</h3>
-            </div>
+          <div className="flex-1 border-4">
+            pabitra
           </div>
         </div>
     </Layout>
