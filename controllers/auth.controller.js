@@ -82,3 +82,57 @@ exports.signin = async (req, res) => {
     }
   }
 };
+
+exports.allUsers = async (req,res) => {
+  try {
+    const users = await user_model.find({userType:"customer"})
+    if(users.length > 0)
+    {
+      res.status(200).send({
+        success: true,
+        message:"User Retrive Sucessfull",
+        users
+      })
+    }
+    else{
+      res.status(400).send({
+        success: true,
+        message:"No User Registered"
+      })
+    }
+
+  } catch (error) {
+    console.error(error);
+        res.status(500).json({
+            success: false,
+            error,
+            message: 'Error while Getting Users',
+        });
+  }
+}
+
+exports.deleteUser = async (req,res) => {
+  const uid = req.params.uid;
+  try {
+    const deleteResponse = await user_model.findByIdAndDelete(uid);
+    if(deleteResponse)
+    {
+      res.status(200).send({
+        success: true,
+        message:"User Deleted Sucessfully"
+      })
+    }
+    else{
+      res.status(400).send({
+        success: true,
+        message:"Failed to Delete the User Server Issue"
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error,
+      message: 'Error while Deleting Users Server Issue',
+  });
+  }
+}

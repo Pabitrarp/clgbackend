@@ -112,19 +112,19 @@ const CreateCategory = () => {
     <>
       <Layout>
         <div className="flex w-full">
-          <div className="w-1/4 mr-4">
+          <div className="w-1/4">
             <AdminMenu />
           </div>
           <div className="w-full">
-          <div className=" flex bg-green-200 h-16 justify-center items-center">
-              <h1 className="text-center text-3xl font-extrabold">Manage Category</h1>
+          <div className=" flex bg-gray-800 h-16 justify-center items-center ">
+              <h1 className="text-center text-white text-3xl font-extrabold">Manage Category</h1>
               </div>
             <div className="flex-1">
               <div className=" p-3 flex justify-end mt-4">
                 <button
                   type="button"
-                  className="focus:outline-none text-2xl text-white bg-green-400
-                  hover:bg-green-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 py-2.5 me-2 mb-2  dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  className="focus:outline-none text-2xl text-white bg-gray-800
+                  hover:bg-gray-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 py-2.5 me-2 mb-2  dark:hover:bg-gray-800 dark:focus:ring-green-800"
                   onClick={() => setCategoryModal(true)}
                 >
                   Add Category
@@ -145,21 +145,21 @@ const CreateCategory = () => {
                   </div>
                 </Modal>
               </div>
-              <div className="categoryTable max-h-fit">
+              <div className="categoryTable max-h-fit ml-4">
                 <div
                   className="sm:rounded-lg relative overflow-x-auto bg-white"
                   style={{ maxHeight: "500px", overflowY: "auto" }}
                 >
-                  <table className="rtl:text-right w-full text-sm text-left text-gray-500">
-                    <thead className="sticky top-0 text-xl text-center text-gray-700 uppercase bg-green-200">
+                  <table className="rtl:text-right w-full text-sm text-left text-white">
+                    <thead className="sticky top-0 text-xl text-center text-gray-700 uppercase bg-gray-800">
                       <tr>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 py-3 text-white">
                           Category Name
                         </th>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 py-3 text-white">
                           Category Description
                         </th>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 py-3 text-white">
                           Actions
                         </th>
                       </tr>
@@ -225,34 +225,84 @@ const CreateCategory = () => {
                   />
                 </Modal>
                 {showDeleteModal && (
+                  <div>
                   <div
                     id="popup-modal"
                     tabIndex={-1}
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75"
+                    className={`${
+                      showDeleteModal ? "" : "hidden"
+                    } overflow-y-auto overflow-x-hidden fixed flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
                   >
-                    <div className="w-full max-w-sm p-8 bg-white rounded-lg">
-                      <h3 className="mb-4 text-lg font-semibold">
-                        {`Are you sure you want to delete this category ${selected.name}?`}
-                      </h3>
-                      <div className="flex justify-end space-x-4">
+                    <div className="relative w-full max-w-md max-h-full p-4">
+                      <div className="dark:bg-gray-700 relative bg-white rounded-lg shadow">
                         <button
-                          className="hover:bg-red-600 px-4 py-2 text-white bg-red-500 rounded-lg"
-                          onClick={() => {
-                            handleDelete(selected._id);
-                            setShowDeleteModal(false);
-                          }}
-                        >
-                          Yes, delete
-                        </button>
-                        <button
-                          className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg"
+                          type="button"
+                          className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-hide="popup-modal"
                           onClick={() => setShowDeleteModal(false)}
                         >
-                          Cancel
+                          <svg
+                            className="w-3 h-3"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 14"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                            />
+                          </svg>
+                          <span className="sr-only">Close modal</span>
                         </button>
+                        <div className="md:p-5 p-4 text-center">
+                          <svg
+                            className="dark:text-gray-200 w-12 h-12 mx-auto mb-4 text-gray-400"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                            />
+                          </svg>
+                          <h3 className="dark:text-gray-400 mb-5 text-lg font-normal text-gray-500">
+                            Are you sure you want to delete this product?
+                          </h3>
+                          <button
+                            data-modal-hide="popup-modal"
+                            type="button"
+                            className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                            onClick={() => {
+                              handleDelete(selected._id);
+                              setShowDeleteModal(false);
+                            }}
+                          >
+                            Yes, I'm sure
+                          </button>
+                          <button
+                            data-modal-hide="popup-modal"
+                            type="button"
+                            className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            onClick={() => {
+                              setShowDeleteModal(false);
+                            }}
+                          >
+                            No, cancel
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
                 )}
               </div>
             </div>

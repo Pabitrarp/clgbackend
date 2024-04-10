@@ -1,3 +1,5 @@
+
+
 const authController = require("../controllers/auth.controller.js");
 const authMiddleWare =  require("../middlewares/auth.middleware.js")
 
@@ -19,4 +21,10 @@ module.exports = (app) => {
     app.get("/ecomm/api/v1/auth/admin-auth",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],(req,res)=>{
         res.status(200).send({ ok: true});
     })
+
+    //get All User
+    app.get("/ecomm/api/v1/auth/all-users",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],authController.allUsers)
+
+    //delete User
+    app.delete("/ecomm/api/v1/auth/delete-user/:uid",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],authController.deleteUser)
 };
