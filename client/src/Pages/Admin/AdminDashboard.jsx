@@ -5,6 +5,7 @@ import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "antd";
 import  axios  from "axios"
+import toast from "react-hot-toast";
 
 const AdminDashboard = () => {
   const { auth } = useAuth();
@@ -14,124 +15,7 @@ const AdminDashboard = () => {
   const [category_count,setCategory_count] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "T-shirt",
-      category: "Clothing",
-      price: "$20",
-      color: "red",
-    },
-    {
-      id: 2,
-      name: "Laptop",
-      category: "Electronics",
-      price: "$800",
-      color: "yellow",
-    },
-    { id: 3, name: "Book", category: "Books", price: "$15", color: "violet" },
-    { id: 4, name: "Shoes", category: "Footwear", price: "$50", color: "pink" },
-    {
-      id: 5,
-      name: "Headphones",
-      category: "Electronics",
-      price: "$50",
-      color: "blue",
-    },
-    {
-      id: 6,
-      name: "Watch",
-      category: "Accessories",
-      price: "$100",
-      color: "dark blue",
-    },
-    { id: 7, name: "Backpack", category: "Bags", price: "$35", color: "alpha" },
-    {
-      id: 8,
-      name: "Sunglasses",
-      category: "Accessories",
-      price: "$25",
-      color: "beta",
-    },
-    {
-      id: 9,
-      name: "Smartphone",
-      category: "Electronics",
-      price: "$600",
-      color: "gama",
-    },
-    { id: 10, name: "Jeans", category: "Clothing", price: "$45", color: 22 },
-    {
-      id: 11,
-      name: "Gaming Console",
-      category: "Electronics",
-      price: "$400",
-      color: "light pink",
-    },
-    {
-      id: 12,
-      name: "Desk Lamp",
-      category: "Home Decor",
-      price: "$30",
-      color: "orange",
-    },
-    {
-      id: 13,
-      name: "Running Shoes",
-      category: "Footwear",
-      price: "$80",
-      color: "green",
-    },
-    {
-      id: 14,
-      name: "Mouse",
-      category: "Electronics",
-      price: "$20",
-      color: "dark green",
-    },
-    {
-      id: 15,
-      name: "Keyboard",
-      category: "Electronics",
-      price: "$50",
-      color: "dark light",
-    },
-    {
-      id: 16,
-      name: "Dress",
-      category: "Clothing",
-      price: "$60",
-      color: "white",
-    },
-    {
-      id: 17,
-      name: "Watch",
-      category: "Accessories",
-      price: "$150",
-      color: "smoke",
-    },
-    {
-      id: 18,
-      name: "Camera",
-      category: "Electronics",
-      price: "$700",
-      color: "fog",
-    },
-    {
-      id: 19,
-      name: "Cookware Set",
-      category: "Kitchen",
-      price: "$100",
-      color: "meruine",
-    },
-    {
-      id: 20,
-      name: "Fitness Tracker",
-      category: "Fitness",
-      price: "$80",
-      color: "brown",
-    },
-  ]);
+  const [products, setProducts] = useState([]);
 
   //Pagination
   const onShowSizeChange = (current, size) => {
@@ -195,10 +79,25 @@ const countCategory = async () => {
     console.log(error)
   }
 }
+const orders = async () => {
+  try {
+    const res = await axios.get("http://localhost:8000/ecomm/api/v1/auth/allOrders");
+    if (res.data.success) {
+      setProducts(res.data.orders); 
+      toast.success(res.data.message);
+    } else {
+      toast.error(res.data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Error fetching orders");
+  }
+};
 useEffect(() => {
 countUser();
 countProduct();
 countCategory();
+orders();
 },[])
   return (
     <>
@@ -317,7 +216,7 @@ countCategory();
                         <div>
                           <p className="mb-2 font-medium text-white">Orders</p>
                           <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
-                            0
+                            {products.length}
                           </p>
                         </div>
                       </div>
@@ -339,13 +238,10 @@ countCategory();
                       Product name
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
-                      Color
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-white text-2xl">
-                      Category
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-white text-2xl">
                       Price
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-white text-2xl">
+                      Quantity
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
                       Action
@@ -353,33 +249,27 @@ countCategory();
                   </tr>
                 </thead>
                 <tbody>
-                  {displayedProducts.map((product) => (
-                    <tr
-                      key={product.id}
-                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700 border-b"
-                    >
-                      <td className="px-6 py-4 text-white text-base">{product.id}</td>
-                      <td className="px-6 py-4  text-white text-base">{product.name}</td>
-                      <td className="px-6 py-4  text-white text-base">{product.color}</td>
-                      <td className="px-6 py-4  text-white text-base">{product.category}</td>
-                      <td className="px-6 py-4  text-white text-base">{product.price}</td>
-                      <td className="px-6 py-4  text-white text-base">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4"
-                        >
-                          VIEW
-                        </a>
-                        <a
-                          href="#" 
-                          className="font-medium text-red-600 hover:text-red-800  hover:underline"
-                        >
-                          CANCEL
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+  {displayedProducts.map((order) => (
+    order.orderItems.map((orderItem) => (
+      <tr key={orderItem._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700 border-b">
+        <td className="px-6 py-4 text-white text-base">{order.user}</td>
+        <td className="px-6 py-4 text-white text-base">{orderItem.productId.name}</td>
+        <td className="px-6 py-4 text-white text-base">{orderItem.productId.price}</td>
+        <td className="px-6 py-4 text-white text-base">{orderItem.quantity}</td>
+        {/* Add more product details as needed */}
+        <td className="px-6 py-4 text-white text-base">
+          <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4">
+            VIEW
+          </a>
+          <a href="#" className="font-medium text-red-600 hover:text-red-800 hover:underline">
+            CANCEL
+          </a>
+        </td>
+      </tr>
+    ))
+  ))}
+</tbody>
+
               </table>
             </div>
 

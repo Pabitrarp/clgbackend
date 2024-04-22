@@ -19,6 +19,7 @@ import Products from './Pages/Admin/Products'
 import UpdateProduct from './Pages/Admin/UpdateProduct'
 import Search from './Pages/Search'
 import Productdetails from './Pages/Productdetails'
+import Order from './Pages/Order'
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
       <Route path='/contact-us' element={<Contact/>} />
       <Route path='/log-in' element={<Login/>} />  
       <Route path='/sign-up' element={<Signup/>} />
+      <Route path='/order' element={<Order/>} />
       <Route path='/*' element={<Pagenotfound/>} />
     </Routes>
     </>

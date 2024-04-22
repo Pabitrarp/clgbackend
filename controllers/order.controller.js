@@ -5,6 +5,7 @@ exports.orderCreate = async (req,res ) => {
     const request_body = req.body;
     const orderDetail = {
         user: request_body.user,
+        mobile: request_body.mobile,
         orderItems:request_body.orderItems,
         orderPrice:request_body.orderPrice,
         pinCode:request_body.pinCode,
@@ -17,6 +18,8 @@ exports.orderCreate = async (req,res ) => {
     {
         case !orderDetail.user:
             return res.status(500).send({ error: "User is Required" });
+        case !orderDetail.mobile:
+            return res.status(500).send({ error: "Mobile is Required" });
         case !orderDetail.orderItems:
             return res.status(500).send({ error: "Order Items is Required" });
         case !orderDetail.orderPrice:
@@ -58,12 +61,46 @@ exports.orderCreate = async (req,res ) => {
     }
 }
 
-//View Order
+//View Order Admin
+exports.allOrders = async (req, res) => {
+    try {
+        const orders = await order_model.find({});
+        
+        for (let order of orders) {
+            await order.populate({
+                path: 'orderItems.productId',
+                select: '-photo' 
+            });
+        }
+
+        if (orders.length > 0) { 
+            return res.status(200).send({
+                success: true,
+                orders,
+                message: "Orders Retrieved Successfully"
+            });
+        } else {
+            return res.status(404).send({
+                success: false,
+                message: "No orders found"
+            });
+        }
+    } catch (error) {
+        console.error("Error retrieving order details:", error);
+        return res.status(500).send({
+            success: false,
+            error,
+            message: "Order Details Retrieval Failed - DB Error",
+        });
+    }
+}
+
+
+//View Order Indivisual User
 exports.orderDetails = async (req,res) => {
     const uid = req.params.uid;
     try {
-        const orderDetail =  await order_model.findOne({user:uid})
-        .populate('user');
+        const orderDetail =  await order_model.findOne({user:uid});
         for(let i= 0 ; i< orderDetail.orderItems.length; i++)
         {
             await orderDetail.populate(`orderItems.${i}.productId`,"-photo")

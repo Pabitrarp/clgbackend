@@ -10,6 +10,7 @@ const db_config = require('./configs/db.config.js');
 const cors = require('cors')
 
 app.use(express.json());
+app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 // CONNECTION WITH MONGOOSE
 mongoose.connect(`${db_config.DB_URL}/${db_config.DB_NAME}`);

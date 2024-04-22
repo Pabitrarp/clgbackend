@@ -54,7 +54,7 @@ const Cart = () => {
           <div className="mt-8 flex justify-between items-center">
             <p className="text-lg">Total: ${totalPrice}</p>
             {auth.token ? (
-              <button onClick={() => navigate('/checkout')} className="bg-green-500 text-white px-6 py-3 rounded">
+              <button onClick={() => navigate('/order')} className="bg-green-500 text-white px-6 py-3 rounded">
                 Checkout
               </button>
             ) : (

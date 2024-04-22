@@ -7,7 +7,7 @@ const Dashboard = () => {
   const {auth} = useAuth();
   return (
     <Layout>
-       <div className="max-w-full px-4 mx-auto my-12 flex">
+       <div className="max-w-full   flex">
           {/* Left side for list of groups */}
           <div className="w-1/4 mr-4">
             <UserMenu/>

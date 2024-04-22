@@ -10,7 +10,7 @@ const Card = ({id,image,name,price}) => {
 
 //Add to Cart Function
   const addToCart = () => {
-    const newItem = { image, name, price ,id}; // Create a new item object
+    const newItem = { image, name, price ,id ,quantity:1}; // Create a new item object
     setCart([...cart, newItem]); // Add the new item to the cart
     localStorage.setItem('cart',JSON.stringify([...cart,newItem]))
     toast.success(`${name} added to Cart`)

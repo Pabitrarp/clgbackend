@@ -13,8 +13,12 @@ const orderItemschema=new mongoose.Schema({
 
 const orderSchema=new mongoose.Schema({
     user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        type: String,
+        required: true
+    },
+    mobile:{
+        type: Number,
+        required: true,
     },
     orderItems: {
         type: [orderItemschema]
