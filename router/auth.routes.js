@@ -30,4 +30,10 @@ module.exports = (app) => {
 
     //count User
     app.get("/ecomm/api/v1/auth/countUsers",[authMiddleWare.verify_Token,authMiddleWare.isAdmin],authController.countUsers)
+
+    //foget password otp generate
+    app.post("/ecomm/api/v1/auth/forgotPassword",authController.otpGenerate);
+
+    //reset Password
+    app.put("/ecomm/api/v1/auth/resetPassword",authController.resetPassword)
 };

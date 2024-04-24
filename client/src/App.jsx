@@ -20,6 +20,7 @@ import UpdateProduct from './Pages/Admin/UpdateProduct'
 import Search from './Pages/Search'
 import Productdetails from './Pages/Productdetails'
 import Order from './Pages/Order'
+import ForgotPassword from './Pages/ForgotPassword'
 
 const App = () => {
   return (
@@ -43,7 +44,8 @@ const App = () => {
       <Route path='admin/users' element={<User/>}/>
       </Route>
       <Route path='/contact-us' element={<Contact/>} />
-      <Route path='/log-in' element={<Login/>} />  
+      <Route path='/log-in' element={<Login/>} />
+      <Route path='/forgotPassword' element={<ForgotPassword/>} />    
       <Route path='/sign-up' element={<Signup/>} />
       <Route path='/order' element={<Order/>} />
       <Route path='/*' element={<Pagenotfound/>} />

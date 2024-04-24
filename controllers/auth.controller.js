@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const user_model = require("../models/user.models.js");
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/auth.config.js");
+const nodemailer = require("nodemailer")
 
 // WRITE LOGIC TO REGISTER USER
 exports.signup = async (req, res) => {
@@ -163,3 +164,86 @@ exports.countUsers = async (req,res) => {
   });
   }
 }
+
+//Forgot Password
+exports.otpGenerate = async (req, res) => {
+ try{
+  const email = req.body.email;
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // Use your email service provider
+    auth: {
+      user: 'pabitramoharana5678@gmail.com', // Your email address
+      pass: 'wuyk ucwc tkks ykwj', // Your email password
+    },
+  });
+  var otp = Math.floor(Math.random() * 1000000);
+  // Prepare email message
+  const mailOptions = {
+    from: 'pabitramoharana5678@gmail.com', // Sender's email address
+    to: email, // Recipient's email address
+    subject: 'Recover Account', // Subject of the email
+    text: `Otp For Recover Account ${otp}`,
+  };
+  
+  // Send email
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(400).send({
+        success: false,
+        message:"Error in Sending Email"
+      })
+    } else {
+      console.log('Email sent:', info.response);
+      res.status(200).send({
+        success: true,
+        message:"Users Count Retrived",
+        otp: otp
+      })
+    }
+  });
+
+ }catch(err){
+  console.log(err);
+  res.status(500).json({
+    success: false,
+    err,
+    message: 'Error while Sending Otp',
+});
+ }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const newPassword = req.body.password; 
+
+    // Find the user by email
+    const user = await user_model.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "Password Reset Failed: User Not Found" });
+    }
+
+    // Hash the new password
+    const hashedPassword = bcrypt.hashSync(newPassword, 8);
+
+    // Update user's password
+    user.password = hashedPassword;
+
+    // Save the updated user
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Password Updated Successfully",
+    });
+  } catch (error) {
+    console.error("Error while resetting user password:", error);
+    return res.status(500).json({
+      success: false,
+      error,
+      message: 'Error while resetting user password',
+    });
+  }
+};

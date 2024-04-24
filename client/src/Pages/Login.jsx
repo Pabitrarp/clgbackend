@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate,useLocation, Link } from "react-router-dom";
 import Layout from "../Components/Layouts/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -111,7 +111,7 @@ const Login = () => {
                             <label for="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                           </div>
                       </div>
-                      <a href="#" className="text-sm font-medium text-primary-600 hover:underline text-blue-600">Forgot password?</a>
+                      <Link to="/forgotPassword" className="text-sm font-medium text-primary-600 hover:underline text-blue-600">Forgot password?</Link>
                   </div>
               {/* Radio buttons for user type */}
               <div className="flex items-start justify-between mt-2">
