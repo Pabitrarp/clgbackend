@@ -215,7 +215,7 @@ exports.otpGenerate = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-    const email = req.body.email;
+    const email = req.params.email;
     const newPassword = req.body.password; 
 
     // Find the user by email

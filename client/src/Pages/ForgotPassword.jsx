@@ -1,12 +1,14 @@
 import React from 'react'
 import Layout from "../Components/Layouts/Layout";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 
+
 const ForgotPassword = () => {
+    const navigate = useNavigate();
     const [email,setemail]=useState("");
     const [otp,setOtp]=useState();
     const [enterOtp,setEnterOtp]=useState();
@@ -17,6 +19,7 @@ const ForgotPassword = () => {
         if(otp == enterOtp)
         {
             setVerfiyOtp(true);
+            navigate(`/resetPassword/${email}`)
         }
         else{
             setVerfiyOtp(false);
