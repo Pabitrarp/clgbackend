@@ -88,7 +88,7 @@ const Card = ({id,image,name,price}) => {
             </span>
           </div>
           <div className=" dark:text-white text-3xl font-bold text-gray-900 text-left mb-6">
-              ${price}
+              Rs.{price}
             </div>
           <div className="flex items-center justify-between">
             

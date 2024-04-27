@@ -5,19 +5,19 @@ import { RxDotFilled } from 'react-icons/rx';
 const Carousal = () => {
   const slides = [
     {
-      url: 'https://images.pexels.com/photos/14693027/pexels-photo-14693027.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: "https://images.pexels.com/photos/3652097/pexels-photo-3652097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
-      url: 'https://images.pexels.com/photos/12560704/pexels-photo-12560704.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     },
     {
-      url: 'https://images.pexels.com/photos/3934616/pexels-photo-3934616.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/139398/thermometer-headache-pain-pills-139398.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     },
     {
-      url: 'https://images.pexels.com/photos/15997337/pexels-photo-15997337/free-photo-of-bicycle-under-building-wall-with-painted-pixel-eyes.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/5327584/pexels-photo-5327584.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     },
     {
-      url: 'https://images.pexels.com/photos/14486283/pexels-photo-14486283.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/4021819/pexels-photo-4021819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     },
   ];
 
