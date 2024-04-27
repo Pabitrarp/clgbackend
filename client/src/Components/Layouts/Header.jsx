@@ -9,6 +9,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { TbLogin2 } from "react-icons/tb";
 import { FaUserPlus } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
+import logo from "../../assets/logo.png"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,9 +42,9 @@ const Header = () => {
             to="/"
             className="rtl:space-x-reverse flex items-center space-x-3"
           >
-            <img src="" className="h-8" alt="Logo" />
+            <img src={logo} className="h-16 w-16 rounded-2xl" alt="Logo" />
             <span className="whitespace-nowrap dark:text-white self-center text-2xl font-semibold">
-              E-commerce
+              MedPlus
             </span>
           </Link>
           <Searchinput />

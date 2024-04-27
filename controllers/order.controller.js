@@ -97,33 +97,27 @@ exports.allOrders = async (req, res) => {
 
 
 //View Order Indivisual User
-exports.orderDetails = async (req,res) => {
+exports.orderDetails = async (req, res) => {
     const uid = req.params.uid;
     try {
-        const orderDetail =  await order_model.findOne({user:uid});
-        for(let i= 0 ; i< orderDetail.orderItems.length; i++)
-        {
-            await orderDetail.populate(`orderItems.${i}.productId`,"-photo")
-        }  
-        if(orderDetail)
-        {
-            return res.status(201).send({
-                success:true,
-                orderDetail,
-                message:"Order Detail Retrive Sucessfully"
-            })
-        }
-        else{
-            return res.status(400).send({
-                success:false,
-                message:"Order Retrive Failed Error"
-            })
+        const orderDetail = await order_model.find({ user: uid }).populate('orderItems.productId', '-photo');
+        if (orderDetail) {
+            return res.status(200).send({
+                success: true,
+                order: orderDetail,
+                message: "Order Detail Retrieved Successfully"
+            });
+        } else {
+            return res.status(404).send({
+                success: false,
+                message: "Order Not Found"
+            });
         }
     } catch (error) {
         return res.status(500).send({
             success: false,
             error,
-            message: "Order Deatils Retrive Failed DB Error",
-          });
+            message: "Error retrieving order details"
+        });
     }
 }

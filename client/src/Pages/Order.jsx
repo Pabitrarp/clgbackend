@@ -12,7 +12,7 @@ const Order = () => {
   const { cart, setCart } = useCart();
   const navigate = useNavigate();
 
-  const [email,setEmail] = useState("");
+  // const [email,setEmail] = useState("");
   const [mobile,setMobile] = useState(9999999999);
   const [pincode,setPincode] = useState(55555);
   const [city,setCity] = useState("");
@@ -48,7 +48,7 @@ const handleRadioChange = (event) => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email,mobile,pincode,adress,city,landmark,selectedHouseType);
+    // console.log(email,mobile,pincode,adress,city,landmark,selectedHouseType);
   };
 
   //remove from cart
@@ -87,7 +87,7 @@ const handleRadioChange = (event) => {
       const res = await axios.post(
         "http://localhost:8000/ecomm/api/v1/auth/createOrder",
         {
-        user: email,
+        user: auth.user.email,
         mobile: mobile,
         orderItems: orderItems,
         orderPrice: totalPrice,
@@ -167,10 +167,10 @@ const handleRadioChange = (event) => {
                           <input
                             type="email"
                             name="email"
-                            value={email}
+                            value={auth?.user.email}
                             placeholder="Email"
                             className="w-1/2 px-4 py-2 mr-2 border border-gray-400"
-                            onChange={(e) => setEmail(e.target.value)}
+                            disabled
                           />
                           <input
                             type="text"
@@ -241,6 +241,7 @@ const handleRadioChange = (event) => {
                           <button
                             type="submit"
                             className="px-4 py-2 text-white bg-black"
+                            onClick={toggleAddressbar}
                           >
                             Submit
                           </button>

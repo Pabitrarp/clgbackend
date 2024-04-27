@@ -14,7 +14,6 @@ import AdminDashboard from './Pages/Admin/AdminDashboard'
 import CreateCategory from './Pages/Admin/CreateCategory'
 import CreateProduct from './Pages/Admin/CreateProduct'
 import User from './Pages/Admin/User'
-import UserOrders from './Pages/User/UserOrders'
 import Products from './Pages/Admin/Products'
 import UpdateProduct from './Pages/Admin/UpdateProduct'
 import Search from './Pages/Search'
@@ -34,7 +33,6 @@ const App = () => {
       <Route path='/cart' element={<Cart/>} />
       <Route path='/dashboard' element={<PrivateRoute/>}>
       <Route path='user' element={<Dashboard/>}/>
-      <Route path='user/orders' element={<UserOrders/>}/>
       </Route>
       <Route path='/dashboard' element={<AdminRoute/>}>
       <Route path='admin' element={<AdminDashboard/>}/>
