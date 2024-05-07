@@ -4,9 +4,19 @@ import toast from "react-hot-toast";
 import AdminMenu from "../../Components/Layouts/AdminMenu";
 import Layout from "../../Components/Layouts/Layout";
 import { Link } from "react-router-dom";
+import {Pagination } from "antd";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(3);//Set Page Display Size
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const displayedProducts = products.slice(startIndex, endIndex);
 
   //getAll Products
   const getAllProducts = async () => {
@@ -38,7 +48,7 @@ const Products = () => {
         </div>
           {/* <h1 className="text-center">All Products List</h1> */}
         <div className="flex flex-wrap justify-center items-center w-screen">
-          {products.map((product) => (
+          {displayedProducts.map((product) => (
             <Link to={`/dashboard/admin/product/${product.name}`} key={product._id}>
             <div className="dark:bg-gray-800 dark:border-gray-700 max-w-sm bg-white border border-gray-200 rounded-lg shadow ml-8">
               <a href="#">
@@ -61,6 +71,16 @@ const Products = () => {
             </div>
             </Link>
           ))}
+          {/* Pagination */}
+          <Pagination
+            className="m-auto mb-8"
+            showSizeChanger
+            onShowSizeChange={setPageSize}
+            onChange={onPageChange}
+            defaultCurrent={currentPage}
+            pageSize={pageSize}
+            total={products.length}
+          />
         </div>
       </div>
     </Layout>

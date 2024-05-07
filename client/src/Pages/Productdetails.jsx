@@ -71,7 +71,7 @@ const Productdetails = () => {
             <p className="p-6 mb-16">{product.description}ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp</p>
             <div className="p-6 flex justify-between">
               <span className="text-xl font-bold ">
-                ${product.price}
+                Rs.{product.price}
               </span>
               <button className="hover:bg-blue-600 focus:outline-none px-4 py-2 text-white bg-blue-500 rounded-md" onClick={addToCart}>
                 Add to Cart

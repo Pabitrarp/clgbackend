@@ -8,11 +8,12 @@ import { Prices } from "../Components/Prices";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);//forr filtered Products
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(4);//Set Page Display Size
 
   useEffect(() => {
     getAllCategory();
@@ -38,6 +39,7 @@ const Home = () => {
     try {
       const res = await axios.get("http://localhost:8000/ecomm/api/v1/auth/getProduct");
       setProducts(res.data.Products);
+      setFilteredProducts(res.data.Products);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +66,8 @@ const Home = () => {
   const filteredProduct = async () => {
     try {
       const res = await axios.post("http://localhost:8000/ecomm/api/v1/auth/product-filter", { checked, radio });
-      setProducts(res.data?.products);
+      // setProducts(res.data?.products);
+      setFilteredProducts(res.data?.products);
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +79,8 @@ const Home = () => {
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const displayedProducts = products.slice(startIndex, endIndex);
+  // const displayedProducts = products.slice(startIndex, endIndex);
+  const displayedProducts = filteredProducts.slice(startIndex, endIndex);
 
   return (
     <>

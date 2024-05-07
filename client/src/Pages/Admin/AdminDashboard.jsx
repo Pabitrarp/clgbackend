@@ -30,6 +30,22 @@ const AdminDashboard = () => {
   const endIndex = startIndex + pageSize;
   const displayedProducts = products.slice(startIndex, endIndex);
 
+  // orders status display
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      const res = await axios.put(`http://localhost:8000/ecomm/api/v1/auth/orders/${orderId}`, { status: newStatus });
+      if (res.data.success) {
+        toast.success("Order status updated successfully");
+        // You can also update the local state if needed
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating order status");
+    }
+  };
+
 //Count Users
 const countUser = async () => {
   try {
@@ -244,30 +260,41 @@ orders();
                       Quantity
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
+                      Payment Status
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-white text-2xl">
+                      Payment Type
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-white text-2xl">
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-  {displayedProducts.map((order) => (
+                {displayedProducts.map((order) => (
     order.orderItems.map((orderItem) => (
       <tr key={orderItem._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700 border-b">
         <td className="px-6 py-4 text-white text-base">{order.user}</td>
-        <td className="px-6 py-4 text-white text-base">{orderItem.productId.name}</td>
-        <td className="px-6 py-4 text-white text-base">{orderItem.productId.price}</td>
+        <td className="px-6 py-4 text-white text-base">{orderItem.productId ? orderItem.productId.name : 'N/A'}</td>
+        <td className="px-6 py-4 text-white text-base">{orderItem.productId ? orderItem.productId.price : 'N/A'}</td>
         <td className="px-6 py-4 text-white text-base">{orderItem.quantity}</td>
+        <td className="px-6 py-4 text-white text-base">{order.paymentStatus}</td>
+        <td className="px-6 py-4 text-white text-base">{order.paymentType}</td>
         {/* Add more product details as needed */}
         <td className="px-6 py-4 text-white text-base">
-          <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4">
-            VIEW
-          </a>
-          <a href="#" className="font-medium text-red-600 hover:text-red-800 hover:underline">
-            CANCEL
-          </a>
+          <select
+            value={order.status}
+            onChange={(e) => handleStatusChange(order._id, e.target.value)}
+            className="border rounded p-1 text-black"
+          >
+            <option className="text-indigo-500" value="PENDING">Pending</option>
+            <option className="text-indigo-500" value="DELIVERED">Delivered</option>
+          </select>
         </td>
       </tr>
     ))
   ))}
+
 </tbody>
 
               </table>

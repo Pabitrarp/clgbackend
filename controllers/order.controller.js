@@ -1,4 +1,5 @@
 const order_model = require("../models/orders.models.js")
+const nodemailer = require("nodemailer")
 
 //order Create
 exports.orderCreate = async (req,res ) => {
@@ -121,3 +122,94 @@ exports.orderDetails = async (req, res) => {
         });
     }
 }
+// orderstatus updtate
+exports.orderStatus = async (req, res) => {
+    const orderId = req.params.orderId;
+    const { status } = req.body; // Extract status from request body
+    try {
+        // Find the order by user ID and update its status
+        const orderDetail = await order_model.findById(orderId);
+
+         if (orderDetail) {
+            orderDetail.orderStatus=status;
+            await orderDetail.save();
+            return res.status(200).send({
+                success: true,
+                order: orderDetail,
+                message:"Order Status Update Sucessfully"
+            });
+        } else {
+            return res.status(404).send({
+                success: false,
+                message: "Order Status Can not Update"
+            });
+        }
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            error,
+            message: "Error updating order status"
+        });
+    }
+}
+
+//Order Messages Email
+exports.orderConfirmation = async (req, res) => {
+    try{
+     const email = req.params.email;
+     const totalPrice = req.body.totalPrice;
+     const mobile = req.body.mobile;
+     const adress = req.body.adress;
+     const city = req.body.city;
+     const landmark = req.body.landmark;
+     const transporter = nodemailer.createTransport({
+       service: 'gmail', // Use your email service provider
+       auth: {
+         user: 'pabitramoharana5678@gmail.com', // Your email address
+         pass: 'wuyk ucwc tkks ykwj', // Your email password
+       },
+     });
+     //Order Details And Order Number
+
+     // Prepare email message
+     const mailOptions = {
+       from: 'pabitramoharana5678@gmail.com', // Sender's email address
+       to: email, // Recipient's email address
+       subject: 'Order Confirmation', // Subject of the email
+       text: `Thank you for your order! We're excited to confirm that your order has been successfully placed. Below are the details of Delivery Adress:
+       
+       Delivery Address:
+       ${adress}
+       ${city}
+       
+       Mobile Number: ${mobile}
+       
+       Landmark: ${landmark}
+       
+       Order Total: ${totalPrice}`,
+     };
+     
+     // Send email
+     transporter.sendMail(mailOptions, function(error, info) {
+       if (error) {
+         console.error('Error sending email:', error);
+         res.status(400).send({
+           success: false,
+         })
+       } else {
+         console.log('Email sent:', info.response);
+         res.status(200).send({
+           success: true,
+           message:"Order Details Send It To Your Email"
+         })
+       }
+     });
+   
+    }catch(err){
+     console.log(err);
+     res.status(500).json({
+       success: false,
+       err,
+   });
+    }
+   };

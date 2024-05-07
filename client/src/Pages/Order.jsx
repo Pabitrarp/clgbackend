@@ -101,6 +101,8 @@ const handleRadioChange = (event) => {
       if(res.data.success)
       {
         toast.success(res.data.message)
+        //Order Confirmation mail
+        orderConfirmation(totalPrice,mobile,adress,city,landmark);
       }
       else{
         toast.error(res.data.message)
@@ -110,6 +112,18 @@ const handleRadioChange = (event) => {
       toast.error("An error occurred while placing the order.");
     }
   };
+
+  const orderConfirmation = async (totalPrice,mobile,adress,city,landmark) => {
+    try {
+      const res = await axios.post(`http://localhost:8000/ecomm/api/v1/auth/orderConfirmation/${auth.user.email}`,{totalPrice,mobile,adress,city,landmark});
+      if(res.data.success)
+      {
+        toast.success("Order Confirmation Send To Your Email")
+      } 
+    } catch (error) {
+      console.log("Somrthing Went While Sending Order Confirmation")
+    }
+  }
   return (
     <>
       <Layout>

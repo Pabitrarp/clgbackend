@@ -41,7 +41,7 @@ const Cart = () => {
               <div key={item.id} className="bg-white p-4 rounded shadow">
                 <img src={item.image} alt={item.name} className="w-full mb-2" />
                 <h2 className="text-lg font-semibold mb-2">{item.name}</h2>
-                <p className="text-gray-600 mb-2">Price: ${item.price}</p>
+                <p className="text-gray-600 mb-2">Price: Rs.{item.price}</p>
                 <button
                   onClick={() => removeFromCart(item.id)}
                   className="bg-red-500 text-white px-4 py-2 rounded"
@@ -52,7 +52,7 @@ const Cart = () => {
             ))}
           </div>
           <div className="mt-8 flex justify-between items-center">
-            <p className="text-lg">Total: ${totalPrice}</p>
+            <p className="text-lg">Total: Rs.{totalPrice}</p>
             {auth.token ? (
               <button onClick={() => navigate('/order')} className="bg-green-500 text-white px-6 py-3 rounded">
                 Checkout
