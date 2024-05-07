@@ -27,6 +27,7 @@ const Card = ({id,image,name,price}) => {
             className="p-8 rounded-t-lg"
             src={image}
             alt="product image"
+            style={{ height: '300px', width: '350px' }}
           />
         </a>
         <div className="px-5 pb-5">
