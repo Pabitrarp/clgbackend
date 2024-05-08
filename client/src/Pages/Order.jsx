@@ -12,12 +12,12 @@ const Order = () => {
   const navigate = useNavigate();
 
   // const [email,setEmail] = useState("");
-  const [mobile,setMobile] = useState(9999999999);
-  const [pincode,setPincode] = useState(55555);
-  const [city,setCity] = useState("");
-  const [adress,setAdress] = useState("");
-  const [landmark,setLandmark] = useState("");
-  const [selectedHouseType, setSelectedValue] = useState('');
+  const [mobile, setMobile] = useState(9999999999);
+  const [pincode, setPincode] = useState(55555);
+  const [city, setCity] = useState("");
+  const [adress, setAdress] = useState("");
+  const [landmark, setLandmark] = useState("");
+  const [selectedHouseType, setSelectedValue] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [addExpand, setAddExpand] = useState(false);
   const [productExpand, setProductExpand] = useState(true);
@@ -40,11 +40,11 @@ const Order = () => {
     setProductExpand(addExpand);
     setPaymentExpand(addExpand);
   };
-// radio
-const handleRadioChange = (event) => {
-  setSelectedValue(event.target.value);
-};
-  
+  // radio
+  const handleRadioChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(email,mobile,pincode,adress,city,landmark,selectedHouseType);
@@ -82,29 +82,27 @@ const handleRadioChange = (event) => {
           quantity: product.quantity,
         });
       });
-      
+
       const res = await axios.post(
         "http://localhost:8000/ecomm/api/v1/auth/createOrder",
         {
-        user: auth.user.email,
-        mobile: mobile,
-        orderItems: orderItems,
-        orderPrice: totalPrice,
-        pinCode: pincode,
-        city: city,
-        address: adress,
-        landmark: landmark,
-        houseType: selectedHouseType,
+          user: auth.user.email,
+          mobile: mobile,
+          orderItems: orderItems,
+          orderPrice: totalPrice,
+          pinCode: pincode,
+          city: city,
+          address: adress,
+          landmark: landmark,
+          houseType: selectedHouseType,
         }
       );
-      if(res.data.success)
-      {
-        toast.success(res.data.message)
+      if (res.data.success) {
+        toast.success(res.data.message);
         //Order Confirmation mail
-        orderConfirmation(totalPrice,mobile,adress,city,landmark);
-      }
-      else{
-        toast.error(res.data.message)
+        orderConfirmation(totalPrice, mobile, adress, city, landmark);
+      } else {
+        toast.error(res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -112,51 +110,80 @@ const handleRadioChange = (event) => {
     }
   };
 
-  const orderConfirmation = async (totalPrice,mobile,adress,city,landmark) => {
+  const orderConfirmation = async (
+    totalPrice,
+    mobile,
+    adress,
+    city,
+    landmark
+  ) => {
     try {
-      const res = await axios.post(`http://localhost:8000/ecomm/api/v1/auth/orderConfirmation/${auth.user.email}`,{totalPrice,mobile,adress,city,landmark});
-      if(res.data.success)
-      {
-        toast.success("Order Confirmation Send To Your Email")
-      } 
+      const res = await axios.post(
+        `http://localhost:8000/ecomm/api/v1/auth/orderConfirmation/${auth.user.email}`,
+        { totalPrice, mobile, adress, city, landmark }
+      );
+      if (res.data.success) {
+        toast.success("Order Confirmation Send To Your Email");
+      }
     } catch (error) {
-      console.log("Somrthing Went While Sending Order Confirmation")
+      console.log("Somrthing Went While Sending Order Confirmation");
     }
-  }
+  };
 
   const checkout = async () => {
     try {
+      const {
+        data: { key },
+      } = await axios.get("http://localhost:8000/ecomm/api/v1/auth/getKey");
 
-      const {data:{key}} = await axios.get("http://localhost:8000/ecomm/api/v1/auth/getKey")
-
-      const {data:{order}} = await axios.post("http://localhost:8000/ecomm/api/v1/auth/payment-checkout",{
-        totalPrice : totalPrice
-      });
+      const {
+        data: { order },
+      } = await axios.post(
+        "http://localhost:8000/ecomm/api/v1/auth/payment-checkout",
+        {
+          totalPrice: totalPrice,
+        }
+      );
       const options = {
         key, // Enter the Key ID generated from the Dashboard
         amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "MED PLUS",
         order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        handler: async function(response) {
-          await axios.post("http://localhost:8000/ecomm/api/paymentVerification");
-        },        
+        handler: async function (response) {
+          const body = { ...response };
+
+          const validateResponse = await fetch(
+            "http://localhost:8000/ecomm/api/paymentVerification",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(body),
+            }
+          );
+
+          const jsonResponse = await validateResponse.json();
+
+          console.log("jsonResponse", jsonResponse);
+        },
         prefill: {
-            email: auth.user.email,
+          email: auth.user.email,
         },
         notes: {
-            "address": "Razorpay Corporate Office"
+          address: "Razorpay Corporate Office",
         },
         theme: {
-            "color": "#3399cc"
-        }
-    };
-    const razor = new window.Razorpay(options);
-    razor.open();
+          color: "#3399cc",
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
     <>
       <Layout>
@@ -273,13 +300,25 @@ const handleRadioChange = (event) => {
                           />
                         </div>
                         <div className="flex mt-2">
-                          <input type="radio" id="home" name="houseType" value="home" checked={selectedHouseType === 'home'}
-          onChange={handleRadioChange} />
+                          <input
+                            type="radio"
+                            id="home"
+                            name="houseType"
+                            value="home"
+                            checked={selectedHouseType === "home"}
+                            onChange={handleRadioChange}
+                          />
                           <label htmlFor="home" className="mr-2">
                             Home
                           </label>
-                          <input type="radio" id="office" name="houseType" value="office" checked={selectedHouseType === 'office'}
-          onChange={handleRadioChange} />
+                          <input
+                            type="radio"
+                            id="office"
+                            name="houseType"
+                            value="office"
+                            checked={selectedHouseType === "office"}
+                            onChange={handleRadioChange}
+                          />
                           <label htmlFor="office" className="ml-2 mr-2">
                             Office
                           </label>
@@ -396,7 +435,7 @@ const handleRadioChange = (event) => {
                       <p className="font-medium text-black">{` ${cart.length} Items`}</p>
                     </div>
                   </div>
-                       
+
                   <div>
                     <button
                       className="px-3 py-2 text-white bg-black"
@@ -418,13 +457,24 @@ const handleRadioChange = (event) => {
                   <div className="flex flex-col p-4 m-4">
                     <div className="flex justify-between p-3 text-lg font-semibold">
                       <div className="flex">
-                        <input type="radio" name="payment-Option" className="mx-2" onClick={checkout} /> Pay Now
+                        <input
+                          type="radio"
+                          name="payment-Option"
+                          className="mx-2"
+                          onClick={checkout}
+                        />{" "}
+                        Pay Now
                       </div>
                     </div>
                     <hr />
                     <div className="flex justify-between p-3 text-lg font-semibold">
                       <div className="flex">
-                        <input type="radio" name="payment-Option" className="mx-2" /> Cash on Delivery
+                        <input
+                          type="radio"
+                          name="payment-Option"
+                          className="mx-2"
+                        />{" "}
+                        Cash on Delivery
                       </div>
                     </div>
                     <hr />
