@@ -6,7 +6,6 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-
 const Order = () => {
   const { auth } = useAuth();
   const { cart, setCart } = useCart();
@@ -122,6 +121,40 @@ const handleRadioChange = (event) => {
       } 
     } catch (error) {
       console.log("Somrthing Went While Sending Order Confirmation")
+    }
+  }
+
+  const checkout = async () => {
+    try {
+
+      const {data:{key}} = await axios.get("http://localhost:8000/ecomm/api/v1/auth/getKey")
+
+      const {data:{order}} = await axios.post("http://localhost:8000/ecomm/api/v1/auth/payment-checkout",{
+        totalPrice : totalPrice
+      });
+      const options = {
+        key, // Enter the Key ID generated from the Dashboard
+        amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        name: "MED PLUS",
+        order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        handler: async function(response) {
+          await axios.post("http://localhost:8000/ecomm/api/paymentVerification");
+        },        
+        prefill: {
+            email: auth.user.email,
+        },
+        notes: {
+            "address": "Razorpay Corporate Office"
+        },
+        theme: {
+            "color": "#3399cc"
+        }
+    };
+    const razor = new window.Razorpay(options);
+    razor.open();
+    } catch (error) {
+      console.log(error);
     }
   }
   return (
@@ -385,34 +418,13 @@ const handleRadioChange = (event) => {
                   <div className="flex flex-col p-4 m-4">
                     <div className="flex justify-between p-3 text-lg font-semibold">
                       <div className="flex">
-                        <input type="radio" className="mx-2" /> UPI
-                      </div>
-                    </div>
-
-                    <hr />
-
-                    <div className="flex justify-between p-3 text-lg font-semibold">
-                      <div className="flex">
-                        <input type="radio" className="mx-2" /> Net Banking
+                        <input type="radio" name="payment-Option" className="mx-2" onClick={checkout} /> Pay Now
                       </div>
                     </div>
                     <hr />
                     <div className="flex justify-between p-3 text-lg font-semibold">
                       <div className="flex">
-                        <input type="radio" className="mx-2" /> Wallet
-                      </div>
-                    </div>
-                    <hr />
-                    <div className="flex justify-between p-3 text-lg font-semibold">
-                      <div className="flex">
-                        <input type="radio" className="mx-2" /> Credit/Debit
-                        Card
-                      </div>
-                    </div>
-                    <hr />
-                    <div className="flex justify-between p-3 text-lg font-semibold">
-                      <div className="flex">
-                        <input type="radio" className="mx-2" /> Cash on Delivery
+                        <input type="radio" name="payment-Option" className="mx-2" /> Cash on Delivery
                       </div>
                     </div>
                     <hr />

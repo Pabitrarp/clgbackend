@@ -56,6 +56,7 @@ const Products = () => {
                   className="rounded-t-lg"
                   src={`http://localhost:8000/ecomm/api/v1/auth/productPhoto/${product._id}`}
                   alt={product.name}
+                  style={{ height: '300px', width: '350px' }}
                 />
               </a>
               <div className="p-5">

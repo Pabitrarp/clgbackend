@@ -21,6 +21,7 @@ import Productdetails from './Pages/Productdetails'
 import Order from './Pages/Order'
 import ForgotPassword from './Pages/ForgotPassword'
 import ResetPassword from './Pages/ResetPassword'
+import PaymentSucess from './Pages/PaymentSucess'
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
       <Route path='/resetPassword/:email' element={<ResetPassword/>} />    
       <Route path='/sign-up' element={<Signup/>} />
       <Route path='/order' element={<Order/>} />
+      <Route path='/paymentsuccess' element={<PaymentSucess/>} />
       <Route path='/*' element={<Pagenotfound/>} />
     </Routes>
     </>

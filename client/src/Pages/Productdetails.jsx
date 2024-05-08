@@ -66,11 +66,15 @@ const Productdetails = () => {
               className="object-cover h-64 lg:h-full w-full"
             />
           </div>
-          <div className="p-6 flex flex-col justify-between lg:w-1/2">
-            <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
-            <p className="mb-8">{product.description}</p>
-            <div className="flex items-center justify-between">
-              <span className="text-xl font-bold">Rs.{product.price}</span>
+          <div className="p-6 flex flex-col  lg:w-1/2">
+           
+            <h2 className="text-2xl font-semibold">Name: {product.name}</h2>
+           
+            <p className="">Description: {product.description}</p>
+            <div className="flex-grow"></div>
+            <div className="flex items-center justify-between ">
+            
+              <span className="text-xl font-bold ">Rs.{product.price}</span>
               <button
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
                 onClick={addToCart}
