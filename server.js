@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 // CONNECTION WITH MONGOOSE
-mongoose.connect(`mongodb://127.0.0.1/clgdb`);
+mongoose.connect(`mongodb://127.0.0.1/MCA`);
 
 const db = mongoose.connection;
 
