@@ -3,17 +3,19 @@ import Layout from "../Components/Layouts/Layout";
 import axios from "axios";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-
 const Order = () => {
   const { auth } = useAuth();
   const { cart, setCart } = useCart();
   const navigate = useNavigate();
+  const params = useParams();
 
   // const [email,setEmail] = useState("");
-  const [mobile, setMobile] = useState(9999999999);
-  const [pincode, setPincode] = useState(55555);
+  const [paid, setPaid] = useState(params.ref);
+  
+  const [mobile, setMobile] = useState();
+  const [pincode, setPincode] = useState();
   const [city, setCity] = useState("");
   const [adress, setAdress] = useState("");
   const [landmark, setLandmark] = useState("");
@@ -22,6 +24,8 @@ const Order = () => {
   const [addExpand, setAddExpand] = useState(false);
   const [productExpand, setProductExpand] = useState(true);
   const [paymentExpand, setPaymentExpand] = useState(false);
+
+  
   const togglePoduct = () => {
     setProductExpand(!productExpand);
     // if(productExpand==true)
@@ -75,7 +79,9 @@ const Order = () => {
 
   const orderProduct = async (req, res) => {
     try {
-      const orderItems = [];
+      const paymentType ="COMPLETED" ;
+      console.log(paymentType);
+      const orderItems = []; 
       cart.forEach((product) => {
         orderItems.push({
           productId: product.id,
@@ -95,6 +101,7 @@ const Order = () => {
           address: adress,
           landmark: landmark,
           houseType: selectedHouseType,
+          paymentType: paymentType
         }
       );
       if (res.data.success) {
@@ -145,29 +152,11 @@ const Order = () => {
         }
       );
       const options = {
-        key, // Enter the Key ID generated from the Dashboard
-        amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency: "INR",
+        key,
+        amount: order.amount,
         name: "MED PLUS",
-        order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        handler: async function (response) {
-          const body = { ...response };
-
-          const validateResponse = await fetch(
-            "http://localhost:8000/ecomm/api/paymentVerification",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(body),
-            }
-          );
-
-          const jsonResponse = await validateResponse.json();
-
-          console.log("jsonResponse", jsonResponse);
-        },
+        order_id: order.id,
+        callback_url: "http://localhost:8000/ecomm/api/paymentVerification",
         prefill: {
           email: auth.user.email,
         },
@@ -191,19 +180,19 @@ const Order = () => {
           <div className="flex flex-col w-2/3 mx-2 overflow-y-auto">
             <div className=" bg-white-300 p-4 mb-2 bg-white">
               <div className="flex justify-between">
-                {/* {Object.keys(address).length > 0 ? (
+                 {adress.length > 0 ? (
                 <div className="flex flex-col">
                   <div className="flex mt-2">
                     Delivery to:
-                    <span className="font-bold">{address.name}</span>{" "}
                     <span className="mx-1 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-300 dark:text-gray-700">
-                      Home
+                      {selectedHouseType}
                     </span>{" "}
-                    <span className="">{address.mobile}</span>
+                    <span className="font-bold">{auth?.user.email}, </span>{" "}
+                    <span className="ml-4">{mobile}</span>
                   </div>
                   <div className="flex mt-2">
                     <p className="font-light">
-                      HIG-143,Sailashree Vihar, {address.city},{address.pincode}
+                      {landmark} ,{city} ,{pincode}
                     </p>
                   </div>
                 </div>
@@ -211,7 +200,7 @@ const Order = () => {
                 <p className="text-lg font-bold text-red-600">
                   No address provided
                 </p>
-              )} */}
+              )}
 
                 <div>
                   <button
@@ -304,8 +293,8 @@ const Order = () => {
                             type="radio"
                             id="home"
                             name="houseType"
-                            value="home"
-                            checked={selectedHouseType === "home"}
+                            value="Home"
+                            checked={selectedHouseType === "Home"}
                             onChange={handleRadioChange}
                           />
                           <label htmlFor="home" className="mr-2">
@@ -315,8 +304,8 @@ const Order = () => {
                             type="radio"
                             id="office"
                             name="houseType"
-                            value="office"
-                            checked={selectedHouseType === "office"}
+                            value="Office"
+                            checked={selectedHouseType === "Office"}
                             onChange={handleRadioChange}
                           />
                           <label htmlFor="office" className="ml-2 mr-2">
@@ -457,17 +446,16 @@ const Order = () => {
                   <div className="flex flex-col p-4 m-4">
                     <div className="flex justify-between p-3 text-lg font-semibold">
                       <div className="flex">
-                        <input
+                      
+                        {paid? "Payment Successfully":(<div> <input
                           type="radio"
                           name="payment-Option"
                           className="mx-2"
                           onClick={checkout}
-                        />{" "}
-                        Pay Now
+                        />Pay Now</div>)}
                       </div>
                     </div>
-                    <hr />
-                    <div className="flex justify-between p-3 text-lg font-semibold">
+                   {paid? "":( <div className="flex justify-between p-3 text-lg font-semibold">
                       <div className="flex">
                         <input
                           type="radio"
@@ -476,7 +464,9 @@ const Order = () => {
                         />{" "}
                         Cash on Delivery
                       </div>
-                    </div>
+                    </div>)}
+                    <hr />
+                   
                     <hr />
                   </div>
                 </div>

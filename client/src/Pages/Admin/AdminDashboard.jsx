@@ -138,7 +138,7 @@ orders();
                     <div className="md:grid-cols-2 xl:grid-cols-4 grid  mb-8">
                       {/* Card */}
                       <div
-                        className="dark:bg-gray-800 h-30 flex items-center justify-center w-48 p-6 bg-white rounded-full shadow-xs"
+                        className="bg-gray-800 h-30 flex items-center justify-center w-48 p-6  rounded-full shadow-xs"
                         onClick={() => navigate("/dashboard/admin/users")}
                       >
                         <div className="dark:text-orange-100 dark:bg-orange-500 right-4 relative p-3 mr-4 text-orange-500 bg-orange-100 rounded-full">
@@ -154,14 +154,14 @@ orders();
                           <p className="mb-2 font-medium text-white">
                             All Users
                           </p>
-                          <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
+                          <p className="text-gray-200 text-lg font-semibold">
                             {users_count}
                           </p>
                         </div>
                       </div>
                       {/* Card */}
                       <div
-                        className="dark:bg-gray-800 h-30 flex items-center w-48 p-6 bg-white rounded-full shadow-xs"
+                        className="bg-gray-800 h-30 flex items-center w-48 p-6  rounded-full shadow-xs"
                         onClick={() => navigate("/dashboard/admin/products")}
                       >
                         <div className="dark:text-green-100 dark:bg-green-500 right-4 relative p-3 mr-4 text-green-500 bg-green-100 rounded-full">
@@ -181,14 +181,14 @@ orders();
                           <p className="mb-2 font-medium text-white">
                             Products
                           </p>
-                          <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
+                          <p className="text-gray-200 text-lg font-semibold">
                             {products_count}
                           </p>
                         </div>
                       </div>
                       {/* Card */}
                       <div
-                        className="dark:bg-gray-800 h-30 flex items-center w-48 p-6 bg-white rounded-full shadow-xs"
+                        className="bg-gray-800 h-30 flex items-center w-48 p-6 rounded-full shadow-xs"
                         onClick={() =>
                           navigate("/dashboard/admin/create-category")
                         }
@@ -210,14 +210,14 @@ orders();
                           <p className="mb-2 font-medium text-white">
                             Catagory
                           </p>
-                          <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
+                          <p className="text-gray-200 text-lg font-semibold">
                             {category_count}
                           </p>
                         </div>
                       </div>
                       {/* Card */}
                       <div
-                        className="dark:bg-gray-800 h-30 flex items-center w-48  p-6 bg-white rounded-full shadow-xs"
+                        className="bg-gray-800 h-30 flex items-center w-48  p-6  rounded-full shadow-xs"
                         onClick={() => navigate("/dashboard/admin")}
                       >
                         <div className="dark:text-blue-100 dark:bg-blue-500 right-4 relative p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
@@ -231,7 +231,7 @@ orders();
                         </div>
                         <div>
                           <p className="mb-2 font-medium text-white">Orders</p>
-                          <p className="dark:text-gray-200 text-lg font-semibold text-gray-700">
+                          <p className="text-gray-200 text-lg font-semibold">
                             {products.length}
                           </p>
                         </div>
@@ -245,7 +245,7 @@ orders();
             <div class=" w-full overflow-x-auto shadow-md sm:rounded-lg " >
             <h1 className="text-2xl mb-4 font-bold fxied" >ORDERS</h1>
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs  text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" style={{position:"sticky",top:0}}>
+                <thead class="text-xs  text-white uppercase  bg-gray-700" style={{position:"sticky",top:0}}>
                   <tr>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
                       USER
@@ -273,7 +273,7 @@ orders();
                 <tbody>
                 {displayedProducts.map((order) => (
     order.orderItems.map((orderItem) => (
-      <tr key={orderItem._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700 border-b">
+      <tr key={orderItem._id} className=" odd:bg-gray-700  even:bg-gray-700 border-gray-700 border-b">
         <td className="px-6 py-4 text-white text-base">{order.user}</td>
         <td className="px-6 py-4 text-white text-base">{orderItem.productId ? orderItem.productId.name : 'N/A'}</td>
         <td className="px-6 py-4 text-white text-base">{orderItem.productId ? orderItem.productId.price : 'N/A'}</td>

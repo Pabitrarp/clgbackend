@@ -46,13 +46,13 @@ const orderSchema=new mongoose.Schema({
     houseType:{
         type: String,
         required: true,
-        default: "home",
-        enum:["home","office"]
+        default: "Home",
+        enum:["Home","Office"]
     },
     paymentType:{
         type:String,
-        enum:["COD","UPI"],
-        default: "COD"
+        // enum: ["COD","COMPLETED"],
+        // default: "COD"
     },
     paymentStatus:{
         type: String,

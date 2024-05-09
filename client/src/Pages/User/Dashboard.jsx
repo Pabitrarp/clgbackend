@@ -60,7 +60,7 @@ const Dashboard = () => {
                   Product Price
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Order Status
+                  Order Type
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
                   Action
@@ -93,8 +93,11 @@ const Dashboard = () => {
                           {item.productId.price}
                         </td>
                         <td className=" px-6 py-3 text-center border-2">
-                          {order.status}
+                          {order.paymentType}
                         </td>
+                        {/* <td className=" px-6 py-3 text-center border-2">
+                          {order.status}
+                        </td> */}
                         <td className=" px-6 py-3 text-center border-2">
                           Cancel
                         </td>

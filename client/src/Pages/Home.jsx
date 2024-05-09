@@ -13,7 +13,7 @@ const Home = () => {
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(4);//Set Page Display Size
+  const [pageSize, setPageSize] = useState(3);//Set Page Display Size
 
   useEffect(() => {
     getAllCategory();
@@ -111,7 +111,7 @@ const Home = () => {
           </div>
           <div className="md:w-5/6 flex flex-col text-center">
             <h1 className=" font-bold">All Products</h1>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-center">
               {displayedProducts.map((product) => (
                 <Card
                   key={product._id}
@@ -119,6 +119,7 @@ const Home = () => {
                   image={product._id ? `http://localhost:8000/ecomm/api/v1/auth/productPhoto/${product._id}` : ""}
                   name={product.name}
                   price={product.price}
+                  className=""
                 />
               ))}
             </div>

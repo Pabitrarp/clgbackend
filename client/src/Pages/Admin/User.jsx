@@ -68,7 +68,7 @@ const User = () => {
             {users.map((user) => (
               <div
                 key={user.id}
-                className="rounded-3xl mt-9 px-6 py-4 m-4 bg-gray-800 border-2"
+                className="rounded-3xl mt-9 px-6 py-4 m-4 bg-gray-800 border-2 w-96 h-96"
               >
                 <img
                   className="sm:w-24 sm:h-24 block object-cover w-16 h-16 m-auto rounded-full"

@@ -13,7 +13,8 @@ exports.orderCreate = async (req,res ) => {
         city:request_body.city,
         address:request_body.address,
         landmark:request_body.landmark,
-        houseType:request_body.houseType
+        houseType:request_body.houseType,
+        paymentType:request_body.paymentType
     }
     switch(true)
     {
@@ -35,6 +36,8 @@ exports.orderCreate = async (req,res ) => {
             return res.status(500).send({ error: "Landmark is Required" });
         case !orderDetail.houseType:
             return res.status(500).send({ error: "House Type is Required" });
+        case !orderDetail.paymentType:
+            return res.status(500).send({error: "Payment Type Required"});
     }
     try {
         const order = await order_model.create(orderDetail);

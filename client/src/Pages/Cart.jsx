@@ -33,13 +33,13 @@ const Cart = () => {
   },[cart])
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Your Cart</h1>
       {cart.length > 0 ? (
-        <div className="container mx-auto my-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="container  mx-auto my-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
             {cart.map((item) => (
-              <div key={item.id} className="bg-white p-4 rounded shadow">
-                <img src={item.image} alt={item.name} className="w-full mb-2" />
+              <div key={item.id} className="bg-white p-4 rounded shadow w-60">
+                <img src={item.image} alt={item.name} className="mb-2" />
                 <h2 className="text-lg font-semibold mb-2">{item.name}</h2>
                 <p className="text-gray-600 mb-2">Price: Rs.{item.price}</p>
                 <button
@@ -64,8 +64,9 @@ const Cart = () => {
             )}
           </div>
         </div>
-      ) : (
-        <p className="text-lg">Your cart is empty.</p>
+      ) : (<div className="h-svh flex justify-center items-center">
+        <p className="text-3xl mb-32 font-bold">Your cart is empty.</p>
+        </div>
       )}
     </Layout>
   );

@@ -45,11 +45,13 @@ exports.checkout = async (req, res) => {
 };
 
 exports.paymentVerification = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  try{
+  console.log(req.body);
+  const { razorpay_payment_id,razorpay_order_id, razorpay_signature } = req.body;
 
   console.log("Received payment verification request...");
 
-  const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+  const sha = crypto.createHmac("sha256", "wIA1RgOHzNw1DwCqTedd2B6M");
   sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
   const digest = sha.digest("hex");
 
@@ -60,5 +62,8 @@ exports.paymentVerification = async (req, res) => {
 
   console.log("Transaction is legit!");
 
-  res.redirect(`http://localhost:5173/paymentsuccess?reference=${razorpay_payment_id}`);
+   res.redirect(`http://localhost:5173/paymentsuccess?reference=${razorpay_payment_id}`);
+}catch(err){
+  console.log(err);
+}
 };

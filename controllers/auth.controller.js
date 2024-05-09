@@ -10,8 +10,8 @@ exports.signup = async (req, res) => {
   const request_body = await req.body;
   // INSERT USER DATA INTO MANGO
   const user_obj = {
-    name: request_body.name,
-    userid: request_body.userid,
+    name: request_body.name, 
+    userid: request_body.userid, 
     email: request_body.email,
     password: bcrypt.hashSync(`${request_body.password}`, 8),
   };
