@@ -65,7 +65,7 @@ const Cart = () => {
           </div>
         </div>
       ) : (<div className="h-svh flex justify-center items-center">
-        <p className="text-3xl mb-32 font-bold">Your cart is empty.</p>
+        <p className="text-3xl mb-32 font-bold">Your cart is empty Add Product.</p>
         </div>
       )}
     </Layout>
