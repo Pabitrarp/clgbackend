@@ -229,12 +229,6 @@ exports.productFilterController = async (req, res) => {
           products
         })
       }
-      else {
-        res.status(404).send({
-          success: false,
-          message: "No products available based on the filtering criteria."
-        });
-      }
   } catch (error) {
     console.log(error)
     res.status(400).send({

@@ -50,7 +50,7 @@ const Products = () => {
         <div className="flex flex-wrap justify-center items-center w-screen">
           {displayedProducts.map((product) => (
             <Link to={`/dashboard/admin/product/${product.name}`} key={product._id}>
-            <div className="dark:bg-gray-800 dark:border-gray-700 max-w-sm bg-white border border-gray-200 rounded-lg shadow ml-8">
+            <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow ml-8">
               <a href="#">
                 <img
                   className="rounded-t-lg"
@@ -61,11 +61,11 @@ const Products = () => {
               </a>
               <div className="p-5">
                 <a href="#">
-                  <h5 className="dark:text-white mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                  <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
                    {product.name}
                   </h5>
                 </a>
-                <p className="dark:text-gray-400 mb-3 font-normal text-gray-700">
+                <p className=" mb-3 font-normal text-gray-700">
                   {product.description}
                 </p>
               </div>
