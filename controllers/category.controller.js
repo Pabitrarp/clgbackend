@@ -96,7 +96,7 @@ exports.updateCategory = async (req,res)=>{
             return res.status(404).json({ success:false,message: 'Category not found' });
           }
       
-          res.status(200).send({ sucess:true,message: 'Category updated successfully', category: updatedCategory });
+          res.status(200).send({ success:true,message: 'Category updated successfully', category: updatedCategory });
     } catch (error) {
         console.log(error);
         res.status(500).send({

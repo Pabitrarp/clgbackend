@@ -222,10 +222,19 @@ exports.productFilterController = async (req, res) => {
       args.price = {$gte: radio[0],$lte:radio[1]}
     }
     const products = await product_model.find(args)
-    res.status(200).send({
-      success: true,
-      products
-    })
+    if(products.length > 0)
+      {
+        res.status(200).send({
+          success: true,
+          products
+        })
+      }
+      else {
+        res.status(404).send({
+          success: false,
+          message: "No products available based on the filtering criteria."
+        });
+      }
   } catch (error) {
     console.log(error)
     res.status(400).send({
