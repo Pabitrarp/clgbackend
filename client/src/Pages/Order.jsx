@@ -13,6 +13,7 @@ const Order = () => {
 
   // const [email,setEmail] = useState("");
   const [paid, setPaid] = useState(params.ref);
+  const [data, childData] = useState("Pay Now");
   
   const [mobile, setMobile] = useState();
   const [pincode, setPincode] = useState();
@@ -79,7 +80,7 @@ const Order = () => {
 
   const orderProduct = async (req, res) => {
     try {
-      const paymentType ="COMPLETED" ;
+      const paymentType =paid?"COMPLETED":"COD";
       console.log(paymentType);
       const orderItems = []; 
       cart.forEach((product) => {
@@ -242,6 +243,7 @@ const Order = () => {
                             placeholder="Mobile"
                             className="w-1/2 px-4 py-2 mr-2 border border-gray-400"
                             onChange={(e) => setMobile(e.target.value)}
+                            required={true}
                           />
                         </div>
                         <div className="flex mt-3">

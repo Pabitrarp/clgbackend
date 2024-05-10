@@ -42,8 +42,7 @@ const Dashboard = () => {
             My Orders
           </h1>
         </div>
-
-        <div className="relative p-6 overflow-x-auto">
+        {orders.length>0?(<div className="relative p-6 overflow-x-auto">
           <table className="rtl:text-right dark:text-gray-900 w-full text-sm text-left text-gray-500">
             <thead className="bg-gray-50 dark:bg-gray-900 dark:text-gray-200 text-xs text-gray-700 uppercase">
               <tr className="text-xl font-bold">
@@ -106,7 +105,7 @@ const Dashboard = () => {
                 )}
             </tbody>
           </table>
-        </div>
+        </div>):(<p className="text-2xl font-bold h-screen text-red-500 flex justify-center items-center">No Orders</p>)}
       </Layout>
     </>
   );

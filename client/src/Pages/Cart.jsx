@@ -17,6 +17,9 @@ const Cart = () => {
     localStorage.setItem('cart',JSON.stringify(updatedCart))
   };
   
+  const emptyCart = () => {
+    setCart([])
+  }
 
   const calculateTotal = () => {
     let total = 0;
@@ -53,6 +56,9 @@ const Cart = () => {
           </div>
           <div className="mt-8 flex justify-between items-center">
             <p className="text-lg">Total: Rs.{totalPrice}</p>
+            <button onClick={emptyCart} className="bg-red-500 text-white px-6 py-3 rounded">
+                Empty Cart
+              </button>
             {auth.token ? (
               <button onClick={() => navigate('/order')} className="bg-green-500 text-white px-6 py-3 rounded">
                 Checkout
