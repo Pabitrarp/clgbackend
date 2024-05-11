@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Card from "../Components/UI/Card";
 import { useCart } from "../context/CartContext";
+import toast from "react-hot-toast";
 
 const Productdetails = () => {
   const params = useParams();
@@ -13,6 +14,10 @@ const Productdetails = () => {
 
 //Add to Cart Function
   const addToCart = () => {
+    const image = `http://localhost:8000/ecomm/api/v1/auth/productPhoto/${product._id}`;
+    const name = product.name;
+    const price = product.price;
+    const id = product._id;
     const newItem = { image, name, price ,id ,quantity:1}; // Create a new item object
     setCart([...cart, newItem]); // Add the new item to the cart
     localStorage.setItem('cart',JSON.stringify([...cart,newItem]))
