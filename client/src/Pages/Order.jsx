@@ -174,6 +174,28 @@ const Order = () => {
       console.log(error);
     }
   };
+
+  const fetchAdress=async(req,res)=>{
+    try{
+      const res=await axios.post("http://localhost:8000/ecomm/api/v1/auth/orders/address",{ user: auth.user.email})
+      if(res.data.success){
+        const {pinCode,city,address,landmark,houseType,mobile}=res.data;
+        setLandmark(landmark);
+        setMobile(mobile);
+        setCity(city);
+        setAdress(address);
+        setSelectedValue(houseType);
+        setPincode(pinCode);
+      }
+    }catch(err){
+       console.log(err)
+
+    }
+  }
+
+  useEffect(() => {
+    fetchAdress();
+  },[])
   return (
     <>
       <Layout>
