@@ -242,29 +242,33 @@ exports.setAddress = async (req, res) => {
 
 exports.removeOrderItem = async (req, res) => {
   const orderId = req.params.pid;
+  const orderItemIdToRemove = "663f57594c03aa7c9614993c"; // Example order item ID to remove
   try {
-    const product = await order_model.deleteOne({
-      "orderItems.productId": orderId,
-    });
-    if (product) {
+    const updatedOrder = await order_model.findByIdAndUpdate(
+      orderId,
+      { $pull: { orderItems: { _id: orderItemIdToRemove } } },
+      { new: true }
+    ).populate('orderItems.product');
+
+    if (updatedOrder) {
       res.status(200).send({
-        success:true,
-        message:"Order Cancled SucesssFully",
-        product,
+        success: true,
+        message: "Order item removed successfully",
+        order: updatedOrder,
+        items: updatedOrder.orderItems
+      });
+    } else {
+      res.status(400).send({
+        success: false,
+        message: "Order item removal failed",
       });
     }
-    else{
-        res.status(400).send({
-            success:false,
-            message:"Order Canclation Failed",
-          }); 
-    }
-    console.log(product);
+    console.log(updatedOrder);
   } catch (error) {
     console.log(error);
     res.status(500).send({
-        success:false,
-        message:"Something Went Wrong",
-      });
+      success: false,
+      message: "Something went wrong",
+    });
   }
 };

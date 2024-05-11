@@ -425,14 +425,14 @@ const Order = () => {
                     </div>
                   ))}
 
-                  <div>
+                  {/* <div>
                     <button
                       className="justify-end px-6 py-3 m-4 text-lg text-white bg-black"
                       onClick={togglePoduct}
                     >
                       Place Order
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 <div className="flex items-center justify-between p-2">

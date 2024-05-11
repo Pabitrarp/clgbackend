@@ -21,5 +21,5 @@ module.exports = (app) => {
     app.post("/ecomm/api/v1/auth/orders/address",[authMiddleware.verify_Token],orderController.setAddress)
 
     //Cancle Order
-    app.put("/ecomm/api/v1/auth/cancleOrder/:pid",[authMiddleware.verify_Token],orderController.removeOrderItem);
-}
+    app.post("/ecomm/api/v1/auth/cancleOrder/:pid",[authMiddleware.verify_Token],orderController.removeOrderItem);
+} 
