@@ -155,7 +155,7 @@ orders();
                             All Users
                           </p>
                           <p className="text-gray-200 text-lg font-semibold">
-                            {users_count}
+                            {users_count -1}
                           </p>
                         </div>
                       </div>
