@@ -46,23 +46,26 @@ const Dashboard = () => {
           <table className="rtl:text-right dark:text-gray-900 w-full text-sm text-left text-gray-500">
             <thead className="bg-gray-50 dark:bg-gray-900 dark:text-gray-200 text-xs text-gray-700 uppercase">
               <tr className="text-xl font-bold">
-                <th scope="col" className="px-6 py-3 text-center">
+              <th scope="col" className="px-6 py-3 text-center">
                   Product image
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Product Name
+                  Product_Name
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Product Quantity
+                  Product_Quantity
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Product Price
+                  Product_Price
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Order Type
+                  Order_Type
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Action
+                  Order_Status
+                </th>
+                <th scope="col" className=" px-6 py-3 text-center">
+                  Address
                 </th>
               </tr>
             </thead>
@@ -94,11 +97,11 @@ const Dashboard = () => {
                         <td className=" px-6 py-3 text-center border-2">
                           {order.paymentType}
                         </td>
-                        {/* <td className=" px-6 py-3 text-center border-2">
-                          {order.status}
-                        </td> */}
                         <td className=" px-6 py-3 text-center border-2">
-                          Cancel
+                        {order.orderStatus}
+                        </td> 
+                        <td className=" px-6 py-3 text-center border-2">
+                        {order.city},{order.address},{order.landmark},{order.pinCode}
                         </td>
                       </tr>
                     ))

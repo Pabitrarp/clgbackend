@@ -87,13 +87,13 @@ const User = () => {
                       {user.userType}
                     </p>
                   </div>
-                  <div className="mt-9 left-0 right-0 flex items-start justify-between">
-                    <a
+                  <div className="mt-9 left-0 right-0 flex items-center justify-center">
+                    {/* <a
                       href="#"
                       className="hover:bg-blue-600  items-start inline-block px-4 py-2 text-white bg-blue-500 rounded-lg"
                     >
                       View Profile
-                    </a>
+                    </a> */}
                     <a
                       href="#"
                       className="hover:bg-red-600  inline-block px-4 py-2 text-white bg-red-500 rounded-lg"

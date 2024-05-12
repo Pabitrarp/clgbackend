@@ -245,13 +245,19 @@ orders();
             <div class=" w-full overflow-x-auto shadow-md sm:rounded-lg " >
             <h1 className="text-2xl mb-4 font-bold fxied" >ORDERS</h1>
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs  text-white uppercase  bg-gray-700" style={{position:"sticky",top:0}}>
+                <thead class="text-xs  text-white   bg-gray-700" style={{position:"sticky",top:0}}>
                   <tr>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
-                      USER
+                      User
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
-                      Product name
+                      Mobile
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-white text-2xl">
+                      Address
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-white text-2xl">
+                      Product_name
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
                       Price
@@ -260,10 +266,10 @@ orders();
                       Quantity
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
-                      Payment Status
+                      Payment_Status
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
-                      Payment Type
+                      Payment_Type
                     </th>
                     <th scope="col" class="px-6 py-3 text-white text-2xl">
                       Action
@@ -275,10 +281,12 @@ orders();
     order.orderItems.map((orderItem) => (
       <tr key={orderItem._id} className=" odd:bg-gray-700  even:bg-gray-700 border-gray-700 border-b">
         <td className="px-6 py-4 text-white text-base">{order.user}</td>
+        <td className="px-6 py-4 text-white text-base">{order.mobile}</td>
+        <td className="px-6 py-4 text-white text-base">{order.city},{order.address},{order.landmark},{order.pinCode}</td>
         <td className="px-6 py-4 text-white text-base">{orderItem.productId ? orderItem.productId.name : 'N/A'}</td>
         <td className="px-6 py-4 text-white text-base">{orderItem.productId ? orderItem.productId.price : 'N/A'}</td>
         <td className="px-6 py-4 text-white text-base">{orderItem.quantity}</td>
-        <td className="px-6 py-4 text-white text-base">{order.paymentStatus}</td>
+        <td className="px-6 py-4 text-white text-base">{order.paymentType=="COD"?"Pending":"Done"}</td>
         <td className="px-6 py-4 text-white text-base">{order.paymentType}</td>
         {/* Add more product details as needed */}
         <td className="px-6 py-4 text-white text-base">
