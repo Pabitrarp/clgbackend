@@ -41,10 +41,10 @@ async function init() {
 
     try {
         user = await user_model.create({
-            name: "Subhrajit",
+            name: "Pabitra",
             userid: "admin",
-            password: bcrypt.hashSync("likundash42@", 8),
-            email: "likundash42@gmail.com",
+            password: bcrypt.hashSync("Pabitra@123", 8),
+            email: "pabitra@gmail.com",
             userType: "admin"
         });
 
