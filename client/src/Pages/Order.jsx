@@ -139,41 +139,44 @@ const Order = () => {
   };
 
   const checkout = async () => {
-    try {
-      const {
-        data: { key },
-      } = await axios.get("http://localhost:8000/ecomm/api/v1/auth/getKey");
+  try {
+    const {data: { key },} = await axios.get("http://localhost:8000/ecomm/api/v1/auth/getKey");
 
-      const {
-        data: { order },
-      } = await axios.post(
-        "http://localhost:8000/ecomm/api/v1/auth/payment-checkout",
-        {
-          totalPrice: totalPrice,
-        }
-      );
-      const options = {
-        key,
-        amount: order.amount,
-        name: "MED PLUS",
-        order_id: order.id,
-        callback_url: "http://localhost:8000/ecomm/api/paymentVerification",
-        prefill: {
-          email: auth.user.email,
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-      const razor = new window.Razorpay(options);
-      razor.open();
-    } catch (error) {
-      console.log(error);
+    const {
+      data: { order },
+    } = await axios.post("http://localhost:8000/ecomm/api/v1/auth/payment-checkout", {
+      totalPrice: totalPrice, // Ensure this is defined
+    });
+
+    const options = {
+      key,
+      amount: order.amount,
+      name: "MED PLUS",
+      order_id: order.id,
+      callback_url: "http://localhost:8000/ecomm/api/v1/auth/paymentVerification", // Ensure correct endpoint
+      prefill: {
+        email: auth?.user?.email || "", // Avoid errors if auth.user is undefined
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    // Ensure Razorpay script is loaded
+    if (!window.Razorpay) {
+      console.error("Razorpay SDK not loaded. Please check your script.");
+      return;
     }
-  };
+
+    const razor = new window.Razorpay(options);
+    razor.open();
+  } catch (error) {
+    console.error("Checkout error:", error);
+  }
+};
 
   const fetchAdress=async(req,res)=>{
     try{

@@ -13,8 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 // CONNECTION WITH MONGOOSE
-mongoose.connect(`mongodb://127.0.0.1/MCA`);
-
+mongoose.connect(`mongodb://127.0.0.1/clgdb`);
 const db = mongoose.connection;
 
 db.on("error", (error) => {
@@ -41,10 +40,10 @@ async function init() {
 
     try {
         user = await user_model.create({
-            name: "Pabitra",
+            name: "Pabitra1",
             userid: "admin",
             password: bcrypt.hashSync("Pabitra@123", 8),
-            email: "pabitra@gmail.com",
+            email: "pabitra42@gmail.com",
             userType: "admin"
         });
 
@@ -63,7 +62,7 @@ require("./router/payment.routes.js")(app);//Payment Gateway
 
 //Get Key
 app.use("/ecomm/api/v1/auth/getKey",(req,res) => {
-    res.status(200).json({key:"rzp_test_ucafI57JhlFURM"})
+    res.status(200).json({key:"rzp_test_uOZqbhkzZQ9vKC"})
 })
 
 app.listen(server_config.PORT, () => {

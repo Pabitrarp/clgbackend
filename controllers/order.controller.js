@@ -167,7 +167,7 @@ exports.orderConfirmation = async (req, res) => {
       service: "gmail", // Use your email service provider
       auth: {
         user: "pabitramoharana5678@gmail.com", // Your email address
-        pass: "wuyk ucwc tkks ykwj", // Your email password
+        pass: "mwxz lsqa pfya cypn", // Your email password
       },
     });
     //Order Details And Order Number

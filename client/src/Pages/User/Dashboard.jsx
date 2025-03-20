@@ -59,7 +59,7 @@ const Dashboard = () => {
                   Product_Price
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
-                  Order_Type
+                  Payment_Type
                 </th>
                 <th scope="col" className=" px-6 py-3 text-center">
                   Order_Status
@@ -94,8 +94,8 @@ const Dashboard = () => {
                         <td className=" px-6 py-3 text-center border-2">
                           {item.productId.price}
                         </td>
-                        <td className=" px-6 py-3 text-center border-2">
-                          {order.paymentType}
+                        <td className=" px-6 py-3 text-center border-2 uppercase">
+                          {order.paymentType=="COMPLETED"?"online ":"cod"}
                         </td>
                         <td className=" px-6 py-3 text-center border-2">
                         {order.orderStatus}

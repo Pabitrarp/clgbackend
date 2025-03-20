@@ -2,28 +2,29 @@ const razorpay = require("razorpay");
 const crypto = require("crypto");
 
 const instance = new razorpay({
-  key_id: "rzp_test_ucafI57JhlFURM",
-  key_secret: "wIA1RgOHzNw1DwCqTedd2B6M",
+  key_id: "rzp_test_uOZqbhkzZQ9vKC",
+  key_secret: "0LVEJPysvMJNluyKNN4rrDjT",
 });
 
-exports.checkout = async (req, res) => {
-  const totalPrice = req.body.totalPrice;
-  try {
-    const options = {
-      amount: Number(totalPrice * 100), // amount in the smallest currency unit (e.g., paise for INR)
-      currency: "INR",
-    };
+// exports.checkout = async (req, res) => {
+//   const totalPrice = req.body.totalPrice;
+  
+//   try {
+//     const options = {
+//       amount: Number(totalPrice * 100), // amount in the smallest currency unit (e.g., paise for INR)
+//       currency: "INR",
+//     };
 
-    const order = await instance.orders.create(options);
-    // console.log(order); // Log the created order object
+//     const order = await instance.orders.create(options);
+//     // console.log(order); // Log the created order object
 
-    // Return the order ID or any relevant data in the response
-    res.status(200).json({ success: true, order });
-  } catch (error) {
-    console.error("Error creating order:", error);
-    res.status(500).json({ success: false, error: "Failed to create order" });
-  }
-};
+//     // Return the order ID or any relevant data in the response
+//     res.status(200).json({ success: true, order });
+//   } catch (error) {
+//     console.error("Error creating order:", error);
+//     res.status(500).json({ success: false, error: "Failed to create order" });
+//   }
+// };
 
 exports.checkout = async (req, res) => {
   const totalPrice = req.body.totalPrice;
@@ -51,7 +52,7 @@ exports.paymentVerification = async (req, res) => {
 
   console.log("Received payment verification request...");
 
-  const sha = crypto.createHmac("sha256", "wIA1RgOHzNw1DwCqTedd2B6M");
+  const sha = crypto.createHmac("sha256", "0LVEJPysvMJNluyKNN4rrDjT");
   sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
   const digest = sha.digest("hex");
 
