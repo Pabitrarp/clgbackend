@@ -12,7 +12,7 @@ const cors = require('cors')
 app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
-// CONNECTION WITH MONGOOSE
+
 mongoose.connect(`mongodb://localhost:27017`);
 const db = mongoose.connection;
 
