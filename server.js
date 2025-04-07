@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 // CONNECTION WITH MONGOOSE
-mongoose.connect(`mongodb://127.0.0.1/clgdb`);
+mongoose.connect(`mongodb://localhost:27017`);
 const db = mongoose.connection;
 
 db.on("error", (error) => {
@@ -68,3 +68,7 @@ app.use("/ecomm/api/v1/auth/getKey",(req,res) => {
 app.listen(server_config.PORT, () => {
     console.log(`Server started at ${server_config.PORT}`);
 });
+
+app.get("/", (req, res) => {
+    res.send("🎉 E-Commerce API is running!");
+  });

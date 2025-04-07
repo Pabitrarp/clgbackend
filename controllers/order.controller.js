@@ -166,8 +166,8 @@ exports.orderConfirmation = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail", // Use your email service provider
       auth: {
-        user: "pabitramoharana5678@gmail.com", // Your email address
-        pass: "mwxz lsqa pfya cypn", // Your email password
+        user: "deepjalaj3@gmail.com", // Your email address
+        pass: "qtwp mnxk pfdn ongt", // Your email password
       },
     });
     //Order Details And Order Number

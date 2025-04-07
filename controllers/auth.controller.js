@@ -172,8 +172,8 @@ exports.otpGenerate = async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail', // Use your email service provider
     auth: {
-      user: 'pabitramoharana5678@gmail.com', // Your email address
-      pass: 'wuyk ucwc tkks ykwj', // Your email password
+      user: 'deepjalaj3@gmail.com', // Your email address
+      pass: 'qtwp mnxk pfdn ongt', // Your email password
     },
   });
   var otp = Math.floor(Math.random() * 1000000);
