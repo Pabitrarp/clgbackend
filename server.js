@@ -13,21 +13,17 @@ app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 
-mongoose.connect(`mongodb+srv://deepjalaj:oAJxC4IPFaJnlLqE@cluster0.pixj20w.mongodb.net/MedicartDB?retryWrites=true&w=majority`, {
-  ssl: true
-});
+const con =async()=>{
+    try {
+        mongoose.connect("mongodb+srv://deepjalaj:oAJxC4IPFaJnlLqE@cluster0.pixj20w.mongodb.net/<dbname>?retryWrites=true&w=majority");
 
-const db = mongoose.connection;
-
-db.on("error", (error) => {
-    console.error("Error connecting to database:", error);
-});
-
-db.once("open", () => {
-    console.log("Connection established successfully with DB");
-    // CREATE ADMIN
-    init();
-});
+       init();
+       console.log("connection done ")  
+    } catch (error) {
+        console.log("error",error)
+    }
+}
+con();
 
 async function init() {
     try {
