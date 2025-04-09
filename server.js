@@ -17,9 +17,10 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(async(req,res)=>{
-  console.log(req.url,req.method)
-})
+app.use(async (req, res, next) => {
+  console.log(req.method, req.url);
+  next(); // pass control to next middleware/route
+});
 const con =async()=>{
     try {
         mongoose.connect("mongodb+srv://deepjalaj:oAJxC4IPFaJnlLqE@cluster0.pixj20w.mongodb.net/<dbname>?retryWrites=true&w=majority");
