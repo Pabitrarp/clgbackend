@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 
-mongoose.connect(`mongodb://localhost:27017`);
+mongoose.connect(`mongodb+srv://deepjalaj:oAJxC4IPFaJnlLqE@cluster0.pixj20w.mongodb.net/MedicartDB?appName=Cluster0`);
 const db = mongoose.connection;
 
 db.on("error", (error) => {
