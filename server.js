@@ -11,7 +11,10 @@ const cors = require('cors')
 
 app.use(express.json());
 app.use(express.urlencoded( {extended: false} ))
-app.use(cors())
+app.use(cors({
+  origin: 'https://medicart-frontend.onrender.com',
+  credentials: true
+}));
 
 const con =async()=>{
     try {
