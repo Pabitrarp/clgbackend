@@ -71,7 +71,7 @@ app.use("/ecomm/api/v1/auth/getKey",(req,res) => {
     res.status(200).json({key:"rzp_test_uOZqbhkzZQ9vKC"})
 })
 
-app.listen(server_config.PORT , "0.0.0.0", () => {
+app.listen(server_config.PORT , () => {
     console.log(`Server started at ${server_config.PORT}`);
 });
 
