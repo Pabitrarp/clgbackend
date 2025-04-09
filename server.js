@@ -16,7 +16,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(async(req,res)=>{
-  console.log(req.url,req.method
+  console.log(req.url,req.method)
 })
 const con =async()=>{
     try {
