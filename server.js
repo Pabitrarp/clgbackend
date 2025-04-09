@@ -14,8 +14,6 @@ app.use(express.urlencoded( {extended: false} ))
 app.use(cors())
 
 mongoose.connect(`mongodb+srv://deepjalaj:oAJxC4IPFaJnlLqE@cluster0.pixj20w.mongodb.net/MedicartDB?retryWrites=true&w=majority`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   ssl: true
 });
 
