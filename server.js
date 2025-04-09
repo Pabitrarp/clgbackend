@@ -15,7 +15,9 @@ app.use(cors({
   origin: 'https://medicart-frontend.onrender.com',
   credentials: true
 }));
-
+app.use(async(req,res)=>{
+  console.log(req.url,req.method
+})
 const con =async()=>{
     try {
         mongoose.connect("mongodb+srv://deepjalaj:oAJxC4IPFaJnlLqE@cluster0.pixj20w.mongodb.net/<dbname>?retryWrites=true&w=majority");
